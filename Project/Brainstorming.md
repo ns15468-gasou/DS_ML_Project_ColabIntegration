@@ -1,0 +1,2 @@
+# Sources to Consider
+[A semantic-based classification approach for an enhanced spam detection](https://galileo-georgiasouthern.primo.exlibrisgroup.com/discovery/openurl?institution=01GALI_GASOUTH&vid=01GALI_GASOUTH:GASOU&volume=94&date=2020&aulast=Saidani&issn=0167-4048&spage=101716&id=doi:10.1016%2Fj.cose.2020.101716&auinit=N&title=Computer%20Security%20:&atitle=A%20semantic-based%20classification%20approach%20for%20an%20enhanced%20spam%20detection&sid=google)
