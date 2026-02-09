@@ -1,0 +1,1 @@
+This folder stores any media a LaTeX file may need to reference. All media may not be uploaded to the repo, but this folder is the reference point for any media usage.
