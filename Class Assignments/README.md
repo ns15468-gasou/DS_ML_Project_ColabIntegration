@@ -1,0 +1,1 @@
+Actual classwork will be done in Overleaf, but this folder lets me use the same repo structure for local LaTeX compiles and project compiles.
