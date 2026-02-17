@@ -9,17 +9,12 @@
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage[colorlinks=true,urlcolor=blue,linkcolor=blue]{hyperref} % To allow Alt Text and Linking for Headers, and to allow blue, underlined URL hyperlinks
-\usepackage{natbib} % To allow BibTeX citations
 
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
-    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}} % Previous lines from IEEE template
 \begin{document}
 
-\title{Systematic Literature Review on the Semantic Analysis of Cybersecurity Indicators
-% {\footnotesize \textsuperscript{*}Note: Sub-titles are not captured in Xplore and
-% should not be used}
-% \thanks{Identify applicable funding agency here. If none, delete this.}
-}
+\title{Systematic Literature Review on the Semantic Analysis of Cybersecurity Indicators}
 
 \author{\IEEEauthorblockN{Nic Recasens}
 \IEEEauthorblockA{\textit{Computer Science} \\
@@ -35,7 +30,8 @@ ns15468@georgiasouthern.edu}}
 
 \maketitle
 
-%TODO @Nic Do you have any issues with making the sections non-numbered? I prefer that for readability, but am not married to it.
+% TODO @j-recasens Do you have any issues with making the sections non-numbered?
+% I prefer that for readability, but am not married to it.
 \section*{Introduction}
 Introduce the project topic, its importance, and the scope of the review.
 
@@ -49,11 +45,27 @@ Explain the process of selecting articles, detailing:
 
 \section*{Literature Review}
 Summarize and critically analyze each article, focusing on:
+\begin{itemize}
+    \item The problem addressed
+    \item Methods or approaches used
+    \item Key findings and contributions
+    \item Limitations or gaps
+\end{itemize}
 
 \section*{Synthesis and Conclusion}
 Highlight overall trends and research gaps, and describe how your project addresses these gaps.
 
-% \subsection{Identify the Headings}
+% @j-recasens As an FYI, I've learned that even if a source is in 
+% litreview.bib, it won't show up in the compiled code without being \cite'd first.
+\bibliographystyle{plain} 
+\bibliography{litreview}
+
+\end{document}
+
+%%%% Help Messages from IEEE:
+
+%% \subsection{Identify the Headings}
+
 % Headings, or heads, are organizational devices that guide the reader through 
 % your paper. There are two types: component heads and text heads.
 
@@ -71,8 +83,3 @@ Highlight overall trends and research gaps, and describe how your project addres
 % sub-topics, the next level head (uppercase Roman numerals) should be used 
 % and, conversely, if there are not at least two sub-topics, then no subheads 
 % should be introduced.
-
-\bibliographystyle{apalike} 
-\bibliography{myrefs}
-
-\end{document}
