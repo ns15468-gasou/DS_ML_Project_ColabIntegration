@@ -81,6 +81,7 @@ These criteria, alongside with the above requirements and toolsets, allowed us t
 %\end{itemize}
 
 \subsection{2016: Overconfidence in Phishing Email Detection} % @j-recasens I am thinking going chronological might work best for easiness
+To begin, we start with our oldest paper from 2016, as this paper shows the limitations of the research into spam indicators before the usage of modern ML techniques like large Language models.
 
 \subsection{20XX: TODO}
 
@@ -89,6 +90,14 @@ These criteria, alongside with the above requirements and toolsets, allowed us t
 \subsection{2020: A semantic-based classification approach for an enhanced spam detection}
 
 \subsection{2020: Detecting Phishing SMS Based on Multiple Correlation Algorithms}
+Now that we've started getting the foundations of this research topic, this new paper from Sonowal and Gunikhan's shows how breadth of study for semantic spam blocking entails so much more than emails.
+When we discussed spam indicators earlier, email shows up as the most common vector, but these authors have a notable paper showing how cellular communications also hurt end users.
+This is introduced as "smishing", or SMS phishing.
+Importantly, it is characterized as a disproportionately dangerous form of cyberattack due to the high trust users place in text messaging.
+Unlike traditional email delivery methods, which see open rates of roughly 20-30\%, SMS messages boast a staggering 98\% open rate, making them an ideal delivery system for malicious and unwanted messages \cite{sonowal1}.
+Traditional defense mechanisms like static blacklists and keyword filters are weakened by the modern attacker trends of URL shorteners, swapping similar-looking characters like O and 0, and social engineering through falsely promoting urgency and legitimacy.
+And to top off the challenges SMS face, the study also identifies a central technical hurdle: high-accuracy detection is difficult to scope when we are talking about a mobile device.
+A desktop computer has a more powerful CPU, and is chained to a wall. But a phone has much more stringent power, heat, and battery costraints when the topic of machine learning is concerned\cite{sonowal1}.
 
 \subsection{2022: Examining Factors Impacting the Effectiveness of Anti-Phishing Trainings}
 
