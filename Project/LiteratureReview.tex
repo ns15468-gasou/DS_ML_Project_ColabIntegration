@@ -90,6 +90,7 @@ To begin, we start with our oldest paper from 2016, as this paper shows the limi
 \subsection{2020: A semantic-based classification approach for an enhanced spam detection}
 
 \subsection{2020: Detecting Phishing SMS Based on Multiple Correlation Algorithms}
+%\item The problem addressed
 Now that we've started getting the foundations of this research topic, this new paper from Sonowal and Gunikhan's shows how breadth of study for semantic spam blocking entails so much more than emails.
 When we discussed spam indicators earlier, email shows up as the most common vector, but these authors have a notable paper showing how cellular communications also hurt end users.
 This is introduced as "smishing", or SMS phishing.
@@ -99,7 +100,26 @@ Traditional defense mechanisms like static blacklists and keyword filters are we
 And to top off the challenges SMS face, the study also identifies a central technical hurdle: high-accuracy detection is difficult to scope when we are talking about a mobile device.
 A desktop computer has a more powerful CPU, and is chained to a wall. But a phone has much more stringent power, heat, and battery costraints when the topic of machine learning is concerned\cite{sonowal1}.
 
+%\item Methods or approaches used
+To combat the aforementioned newer tactics, the researchers went away from the older "bag of words" keywords, and instead used a more dynamic "features" paradigm to profile text.
+They identified 52 distinct features, including textual metadata like message length and capitalization ratios, and more complex linguistic metrics like the Gunning Fog and Coleman-Liau Indices \cite{sonowal1}.
+A notable metric the authors uncovered was the dichotomy between standard business email template and the erratic failed syntax of spammers, with it allowing high consistency in detection.
+
+%\item Key findings and contributions
+To process this data, they utilized the AdaBoost (Adaptive Boosting) classifier, an iterative ML model that prioritizes learning from its own classification errors to distinguish between the differences in true and false positives. 
+And as for the ranking algorithm, Kendall rank correlation provided superior accuracy over other correlation algorithms in prioritizing categorized results. 
+These together helped lower the 52 features from earlier down to just 20 .
+That is a 61.53\% decrease in dimensions, all while still achieving an impressive 98\% accuracy \cite{sonowal1}.
+That reduction in dimensionality was key in making the model viable for mobile devices aswell.
+
+%\item Limitations or gaps
+
+
 \subsection{2022: Examining Factors Impacting the Effectiveness of Anti-Phishing Trainings}
+With the effect of spam and phishing fully realized in the previous papers, there should be no surprise that a continued effort exists for preventing attacks from successfully landing.
+Training is a key part of this, and in a way, can be seen as teaching humans the ways to spot the indicators ML saw earlier.
+We saw many advancements in preventing spam in the first place, but for the false negatives, authors TODO and TODO show how reactive defense should be expanded.
+This moves us into the year 2022, and here, 
 
 \subsection{20XX: TODO}
 
