@@ -1,2 +1,2 @@
 # DS_ML_Project_ColabIntegration
-This repository is for Google Colab and GitHub integration practice for the class's project
+Cyber threats are highly pervasive in today's world. As such, our team aims to train a supervised ML model to help identify these threats through analyzing indicators of spam and phishing.
