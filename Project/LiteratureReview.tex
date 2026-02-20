@@ -92,21 +92,21 @@ To begin, we start with our oldest paper from 2019, as this paper shows the limi
 The 2020's were a boom in semantic research, as we saw more powerful AI models hit impressive feats.
 As such, the research of Saidani, Adi and Allili in the beginning of this year addresses how the persistent and evolving threat of email spam can be mitigated by incorporating these new paradigms.
 Spam continues to account for over 56\% of total email traffic, but traditional spam detection systems largely rely on the provenly ineffectual "bag-of-words" model, which evaluates emails as an unstructured collection of independent words without considering grammar, context, or word order.
-Semantic analysis can help prevent the biggest risk of BoW that the authors identified, which is polysemy /cite{saidani1}.
+Semantic analysis can help prevent the biggest risk of BoW that the authors identified, which is polysemy \cite{saidani1}.
 Polysemy is a linguistic problem where a single word like "march" can have drastically different meanings depending on the context.
 Spammers purposefully exploited the weaknesses of basic keyword filters through obfuscation, leading to the semantic classification employed in the paper.
 
 %\item Key findings and contributions
 To combat these tactics, the authors proposed a novel two-level semantic analysis framework. In the first level, incoming emails are categorized into distinct subject domains (such as Health, Finance, Education, Computer, and Adult).
-This establishes a tailored dataset of spam indicators for each specific sector /cite{saidani1}.
-In the second level, the researchers build a "feature space" for each domain by combining regular expression formatted hyperparamaters with automatically extracted rules generated via the CN2-SD top-down search algorithm /cite{saidani1}.
+This establishes a tailored dataset of spam indicators for each specific sector \cite{saidani1}.
+In the second level, the researchers build a "feature space" for each domain by combining regular expression formatted hyperparamaters with automatically extracted rules generated via the CN2-SD top-down search algorithm \cite{saidani1}.
 These rules are then merged and applied against test messages, with multiple various machine learning algorithms being tested.
 These included Adaboost, Random Forest, and Naive Bayes, with the goal to construct classifiers that accurately differentiate between spam and legitimate email indicators semantically.
 
 %\item Key findings and contributions
 Moving past lexical analysis to semantics led to the central finding of the study, which was that the domain-specific semantic approach significantly outperforms general-purpose classification models, including enhanced topic-based vector space models (eTVSM) (which were the high standard before this paper).
-Some domains were able to be trained succesfully enough to reach 98\% accuracy /cite{saidani1}.
-A major concept that this research contributed is proving that while spammers can always manipulate spelling and utilize synonyms to trick BoW classification, they cannot easily disguise the underlying intent or meaning of their emails (as of when this paper was published) /cite{saidani1}. 
+Some domains were able to be trained succesfully enough to reach 98\% accuracy \cite{saidani1}.
+A major concept that this research contributed is proving that while spammers can always manipulate spelling and utilize synonyms to trick BoW classification, they cannot easily disguise the underlying intent or meaning of their emails (as of when this paper was published) \cite{saidani1}. 
 
 %\item Limitations or gaps
 Now, despite the high accuracy in multiple domains, the proposed semantic framework has areas requiring further development.
@@ -177,7 +177,7 @@ This all indicates that the concepts are indeed sound, they are just expectedly 
 
 \subsection{20XX: TODO}
 
-\section{Synthesis and Conclusion}
+\section{Synthesis and Conclusion} % @j-recasens Leaving to you, message back if you think we should swap
 %% Highlight overall trends and research gaps, and describe how your project addresses these gaps.
 
 % @j-recasens As an FYI, I've learned that even if a source is in 
