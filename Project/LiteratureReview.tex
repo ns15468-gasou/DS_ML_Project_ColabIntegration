@@ -80,14 +80,15 @@ These criteria, alongside with the above requirements and toolsets, allowed us t
     %\item Limitations or gaps
 %\end{itemize}
 
-\subsection{2016: Overconfidence in Phishing Email Detection} % @j-recasens I am thinking going chronological might work best for easiness
-To begin, we start with our oldest paper from 2016, as this paper shows the limitations of the research into spam indicators before the usage of modern ML techniques like large Language models.
+\subsection{2019: iMCircle: Automatic Mining of Indicators of Compromise from the Web} % @j-recasens I am thinking going chronological might work best for easiness. You have done a lit review for Dr. Viji before though so let me know.
+To begin, we start with our oldest paper from 2019, as this paper shows the limitations of the research into spam indicators before the usage of modern ML techniques like large Language models.
 
 \subsection{20XX: TODO}
 
 \subsection{20XX: TODO}
 
 \subsection{2020: A semantic-based classification approach for an enhanced spam detection}
+%\item The problem addressed
 The 2020's were a boom in semantic research, as we saw more powerful AI models hit impressive feats.
 As such, the research of Saidani, Adi and Allili in the beginning of this year addresses how the persistent and evolving threat of email spam can be mitigated by incorporating these new paradigms.
 Spam continues to account for over 56\% of total email traffic, but traditional spam detection systems largely rely on the provenly ineffectual "bag-of-words" model, which evaluates emails as an unstructured collection of independent words without considering grammar, context, or word order.
@@ -95,16 +96,19 @@ Semantic analysis can help prevent the biggest risk of BoW that the authors iden
 Polysemy is a linguistic problem where a single word like "march" can have drastically different meanings depending on the context.
 Spammers purposefully exploited the weaknesses of basic keyword filters through obfuscation, leading to the semantic classification employed in the paper.
 
+%\item Key findings and contributions
 To combat these tactics, the authors proposed a novel two-level semantic analysis framework. In the first level, incoming emails are categorized into distinct subject domains (such as Health, Finance, Education, Computer, and Adult).
 This establishes a tailored dataset of spam indicators for each specific sector /cite{saidani1}.
 In the second level, the researchers build a "feature space" for each domain by combining regular expression formatted hyperparamaters with automatically extracted rules generated via the CN2-SD top-down search algorithm /cite{saidani1}.
 These rules are then merged and applied against test messages, with multiple various machine learning algorithms being tested.
 These included Adaboost, Random Forest, and Naive Bayes, with the goal to construct classifiers that accurately differentiate between spam and legitimate email indicators semantically.
 
+%\item Key findings and contributions
 Moving past lexical analysis to semantics led to the central finding of the study, which was that the domain-specific semantic approach significantly outperforms general-purpose classification models, including enhanced topic-based vector space models (eTVSM) (which were the high standard before this paper).
 Some domains were able to be trained succesfully enough to reach 98\% accuracy /cite{saidani1}.
 A major concept that this research contributed is proving that while spammers can always manipulate spelling and utilize synonyms to trick BoW classification, they cannot easily disguise the underlying intent or meaning of their emails (as of when this paper was published) /cite{saidani1}. 
 
+%\item Limitations or gaps
 Now, despite the high accuracy in multiple domains, the proposed semantic framework has areas requiring further development.
 The authors acknowledge that achieving "word sense disambiguation" could clearly improve their work, with that referring to the ability of models  an ongoing challenge and represents the next frontier for future work, with .
 While domain categorization narrows down the context, teaching a computer system to definitively resolve nuanced word meanings based purely on complex sentence structures is still difficult.
@@ -138,11 +142,35 @@ But, despite all the successes in the SMS field the authors enjoyed, there is st
 First, as generative AI tools become more indistinguishable when mimicking the professional readability scores of companies, the "readability dissonance" the researchers rely on may diminish.
 Additionally, while the paper focuses on the positives of tracking features, in terms of user privacy, the surveillance concerns of an AI analyzing a user could limit further adoption.
 
-\subsection{2022: Examining Factors Impacting the Effectiveness of Anti-Phishing Trainings}
-With the effect of spam and phishing fully realized in the previous papers, there should be no surprise that a continued effort exists for preventing attacks from successfully landing.
-Training is a key part of this, and in a way, can be seen as teaching humans the ways to spot the indicators ML saw earlier.
-We saw many advancements in preventing spam in the first place, but for the false negatives, authors TODO and TODO show how reactive defense should be expanded.
-This moves us into the year 2022, and here, 
+\subsection{2022: An Effective Cybersecurity Awareness Training Model: First Defense of an Organizational Security Strategy}
+%\item The Problem Addressed
+This moves us into the year 2022, and here, with the effect of spam and phishing fully realized in the previous papers, there should be no surprise that a continued effort exists for preventing attacks from successfully landing.
+For the majority of the papers reviewed, we have seen how computers can protect us from threats.
+However, when it comes to protecting ourselves, protecting the human factor, the work of Dash and Ansari shows how computers can help us improve proactively, rather than rely on content filtering alone.
+For false negatives, user training is a key part of security, and in a way, can be seen as teaching humans the ways to spot the indicators ML saw earlier.
+Despite advancements in defensive systems like firewalls, "naïve information security practices" as the authors put it accounts for for between 72\% and 95\% of all cyber threats \cite{dash1}.
+
+%\item Methods and Approaches
+To address these vulnerabilities, the study employs a novel qualitative research design method utilizing the Technology Acceptance Model (TAM) as its primary theoretical framework. 
+TAM was created in 1989 to aid human-computer collaboration, but the authors add modifications that incorporate "behavioral intention" to relate it to modern training needs \cite{dash1}.
+This helps us to understand how intervention trhough training can successfully influence employee behavior.
+Additionally, the paper evaluates the National Initiative for Cybersecurity Education (NICE) and the viCyber model.
+The viCyber model is a cloud-based AI system that uses visual mapping and an inference engine to develop a customized cybersecurity curriculum based on specific competency needs, while NICE is the framework the approach relies on \cite{dash1}.
+
+%\item Key Findings and Contributions
+The study found in order to be effective, security strategy must adopt a bottom-up approach.
+This means making every employee accountable for the security of their own representative areas, rather than blaming software vendors or IT \cite{dash1}.
+A significant contribution of this research past that is the endorsement of AI-enabled training tools like viCyber.
+AI tools like that can provide real-time feedback, and can even adapt to each user's understanding level, allowing the aforemntioned accountability to come more naturally \cite{dash1}.
+The authors found that adaptable systems like these are more effective than traditional "one-size-fits-all" Massive Online Open Courses (MOOCs) because they can be tailored in effecient and individualized ways \cite{dash1}.
+
+%\item Limitations and Gaps
+But, the paper still did not completely solve the user education crisis. 
+While they do advocate for robust personalized security training to protect users from phishing, the authors also identified a literature gap regarding AI-based security training efficacy, which the study itself barely begins to fill.
+Another notable limitation here is the warning that high expectations from executives can create an unhealthy security climate if technical defense is neglected. 
+Just because training supports security doesn't mean it replaces it \cite{dash1}. 
+Additionally, the paper mentions that the viCyber tool is still a "work in progress", and acknowledges that many organizations struggle to implement complex frameworks like NICE due to a lack of domain experts on payroll.
+This all indicates that the concepts are indeed sound, they are just expectedly not a silver bullet without further development.
 
 
 \subsection{20XX: TODO}
