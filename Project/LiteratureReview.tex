@@ -93,11 +93,12 @@ Consequently, current methods may suffer from incomplete coverage and data delay
 To solve this, the authors developed a system called iMCircle.
 The iMCircle system employs an active recursive architecture consisting of four major components: a search engine crawler, an information preprocessor, an IoC checker and generator, and a new "seed" extractor (with seeds being the inputs for the next run of the iMCircle recursion) \cite{zhang1}.
 Unlike former passive systems, iMCircle takes spam and phishing indicators (like domains and IoCs) and combines them with a "target threat field" (i.e. "APT attack") to create search engine queries for exploratory data collection.
-It uses Google to retrieve relevant public information, which is then processed using Natural Language Processing (NLP) techniques to extract semantic features from titles, URLs, and snippets \cite{zhang1}.
-Machine learning models like Support Vector Machines (SVM) and Decision Trees classify whether an indicator is a legitimate threat. Validated IoCs are then used to extract new seeds from their associated webpages, restarting the cycle.
+It uses Google to retrieve relevant public information, which is then processed using Natural Language Processing (NLP) techniques to extract semantic features from site titles, URLs, and page snippets \cite{zhang1}.
+Machine learning models like Support Vector Machines (SVM) and Decision Trees then classify whether an indicator is a legitimate threat.
+In the final step of the chain, Validated IoCs are then used to extract new seeds from their associated webpages, restarting the cycle.
 
 %\item Key Findings and Contributions
-The study's primary contribution with this cyclical approach is the development of the first system (according to the authors) that mines IoCs continuously and automatically by checking suspicious indicators against open-source threat information. Since the time of this paper as well, we have seen many security scraping efforts be prioritized as well \cite{zhang1}. During a two-month real-world evaluation, the system demonstrated significant efficacy: the SVM model achieved a precision of 96.70\% and an F1 score of 90.46\% in identifying threat indicators. Furthermore, iMCircle successfully discovered 2,941 unique data sources, including more niche and varied public sources that traditional monitoring might overlook. That ability to get fresh data, rather than recycled was of considerable satisfaction from the authors \cite{zhang1}.
+The study's primary contribution with this cyclical approach is the development of the first system (according to the authors) that mines IoCs continuously and automatically by checking suspicious indicators against open-source threat information. Since the time of this paper as well, we have seen many security scraping efforts be prioritized as well \cite{zhang1}. During a two-month real-world evaluation, the system demonstrated significant efficacy: the SVM model achieved a precision of 96.70\% and an F1 score of 90.46\% in identifying threat indicators. Furthermore, iMCircle successfully discovered 2,941 unique data sources, including more niche and varied public sources that traditional monitoring might overlook. That ability to get fresh data, rather than recycled, was of considerable satisfaction for the authors \cite{zhang1}.
 
 %\item Limitations or Gaps
 But, while iMCircle showed impressive performance, the paper did still acknowledge several limitations.
@@ -116,16 +117,16 @@ So while the authors suggest that iMCircle could  be adapted for other indicator
 The 2020's were a boom in semantic research, as we saw more powerful AI models hit impressive feats.
 As such, the research of Saidani, Adi and Allili in the beginning of this year addresses how the persistent and evolving threat of email spam can be mitigated by incorporating these new paradigms.
 Spam continues to account for over 56\% of total email traffic, but traditional spam detection systems largely rely on the provenly ineffectual "bag-of-words" model, which evaluates emails as an unstructured collection of independent words without considering grammar, context, or word order.
-Semantic analysis can help prevent the biggest risk of BoW that the authors identified, which is polysemy \cite{saidani1}.
-Polysemy is a linguistic problem where a single word like "march" can have drastically different meanings depending on the context.
+Semantic analysis can help prevent one of the biggest risks of BoW that the authors identified, which is polysemy \cite{saidani1}.
+Polysemy is a linguistic problem where a single word like "bow" can have drastically different meanings depending on the context.
 Spammers purposefully exploited the weaknesses of basic keyword filters through obfuscation, leading to the semantic classification employed in the paper.
 
 %\item Key findings and contributions
 To combat these tactics, the authors proposed a novel two-level semantic analysis framework. In the first level, incoming emails are categorized into distinct subject domains (such as Health, Finance, Education, Computer, and Adult).
 This establishes a tailored dataset of spam indicators for each specific sector \cite{saidani1}.
 In the second level, the researchers build a "feature space" for each domain by combining regular expression formatted hyperparameters with automatically extracted rules generated via the CN2-SD top-down search algorithm \cite{saidani1}.
-These rules are then merged and applied against test messages, with multiple various machine learning algorithms being tested.
-These included Adaboost, Random Forest, and Naive Bayes, with the goal to construct classifiers that accurately differentiate between spam and legitimate email indicators semantically.
+These rules are then merged and applied against test messages, with various machine learning algorithms being tested.
+These included Adaboost, Random Forest, and Naïve Bayes, with the goal to construct classifiers that accurately differentiate between spam and legitimate email indicators semantically.
 
 %\item Key findings and contributions
 Moving past lexical analysis to semantics led to the central finding of the study, which was that the domain-specific semantic approach significantly outperforms general-purpose classification models, including enhanced topic-based vector space models (eTVSM) (which were the high standard before this paper).
@@ -134,20 +135,21 @@ A major concept that this research contributed is proving that while spammers ca
 
 %\item Limitations or gaps
 Now, despite the high accuracy in multiple domains, the proposed semantic framework has areas requiring further development.
-The authors acknowledge that achieving "word sense disambiguation" could clearly improve their work, with that referring to the ability of models  an ongoing challenge and represents the next frontier for future work, with .
+The authors acknowledge that achieving "word sense disambiguation" could clearly improve their work, with word sense referring to the ability of models to disambiguate context around a phrase.
+Word sense is an ongoing challenge, and to the authors represents the next frontier for future work in spam detection \cite{saidani1}.
 While domain categorization narrows down the context, teaching a computer system to definitively resolve nuanced word meanings based purely on complex sentence structures is still difficult.
-Additionally, the reliance on manually specified rules as part of the hybrid approach means that experts must continuously update their knowledge engineering to maintain efficiency and keep pace with the rapidly evolving tactics of modern spammers.
+Additionally, the reliance on manually specified rules as part of the hybrid approach means that experts must continuously update their knowledge engineering to maintain efficiency and keep pace with the rapidly evolving tactics of modern spammers \cite{saidani1}.
 
 \subsection{2020: Detecting Phishing SMS Based on Multiple Correlation Algorithms}
 %\item The problem addressed
-Now that we've started getting the foundations of this research topic, this new paper from Sonowal and Gunikhan's shows how breadth of study for semantic spam blocking entails so much more than emails.
+Now that we've started getting the foundations of this research topic laid, this new paper from Sonowal and Gunikhan's shows how breadth of study for semantic spam blocking entails so much more than just emails.
 When we discussed spam indicators earlier, email shows up as the most common vector, but these authors have a notable paper showing how cellular communications also hurt end users.
 This is introduced as "smishing", or SMS phishing.
 Importantly, it is characterized as a disproportionately dangerous form of cyberattack due to the high trust users place in text messaging.
 Unlike traditional email delivery methods, which see open rates of roughly 20-30\%, SMS messages boast a staggering 98\% open rate, making them an ideal delivery system for malicious and unwanted messages \cite{sonowal1}.
 Traditional defense mechanisms like static blacklists and keyword filters are weakened by the modern attacker trends of URL shorteners, swapping similar-looking characters like O and 0, and social engineering through falsely promoting urgency and legitimacy.
 And to top off the challenges SMS face, the study also identifies a central technical hurdle: high-accuracy detection is difficult to scope when we are talking about a mobile device.
-A desktop computer has a more powerful CPU, and is chained to a wall. But a phone has much more stringent power, heat, and battery constraints when the topic of machine learning is concerned\cite{sonowal1}.
+A desktop computer has a powerful full-sized CPU, and is chained to a wall. But a phone has much more stringent power, heat, and battery constraints when the topic of machine learning is concerned\cite{sonowal1}.
 
 %\item Methods or approaches used
 To combat the aforementioned newer tactics, the researchers went away from the older "bag of words" keywords, and instead used a more dynamic "features" paradigm to profile text.
@@ -159,12 +161,12 @@ To process this data, they utilized the AdaBoost (Adaptive Boosting) classifier,
 And as for the ranking algorithm, Kendall rank correlation provided superior accuracy over other correlation algorithms in prioritizing categorized results. 
 These together helped lower the 52 features from earlier down to just 20 .
 That is a 61.53\% decrease in dimensions, all while still achieving an impressive 98\% accuracy \cite{sonowal1}.
-That reduction in dimensionality was key in making the model viable for mobile devices as well.
+That reduction in dimensionality was key in making the model viable for mobile devices' lower power draw.
 
 %\item Limitations or gaps
 But, despite all the successes in the SMS field the authors enjoyed, there is still work to be done in non-email based instances.
-First, as generative AI tools become more indistinguishable when mimicking the professional readability scores of companies, the "readability dissonance" the researchers rely on may diminish.
-Additionally, while the paper focuses on the positives of tracking features, in terms of user privacy, the surveillance concerns of an AI analyzing a user could limit further adoption.
+First, as generative AI tools become more indistinguishable when mimicking the professional readability scores of companies, the "readability dissonance" the researchers rely on may diminish \cite{sonowal1}.
+Additionally, while the paper focuses on the positives of tracking features, in terms of user privacy, the surveillance concerns of an AI analyzing a user could limit further adoption of the author's security measures.
 
 \subsection{2022: An Effective Cybersecurity Awareness Training Model: First Defense of an Organizational Security Strategy}
 %\item The Problem Addressed
@@ -172,7 +174,7 @@ This moves us into the year 2022, and here, with the effect of spam and phishing
 For the majority of the papers reviewed, we have seen how computers can protect us from threats.
 However, when it comes to protecting ourselves, protecting the human factor, the work of Dash and Ansari shows how computers can help us improve proactively, rather than rely on content filtering alone.
 For false negatives, user training is a key part of security, and in a way, can be seen as teaching humans the ways to spot the indicators ML saw earlier.
-Despite advancements in defensive systems like firewalls, "naïve information security practices" as the authors put it accounts for for between 72\% and 95\% of all cyber threats \cite{dash1}.
+Despite advancements in defensive systems like firewalls and email filtering, "naïve information security practices" as the authors put it accounts for for between 72\% and 95\% of all cyber threats \cite{dash1}.
 
 %\item Methods and Approaches
 To address these vulnerabilities, the study employs a novel qualitative research design method utilizing the Technology Acceptance Model (TAM) as its primary theoretical framework. 
@@ -185,17 +187,16 @@ The viCyber model is a cloud-based AI system that uses visual mapping and an inf
 The study found in order to be effective, security strategy must adopt a bottom-up approach.
 This means making every employee accountable for the security of their own representative areas, rather than blaming software vendors or IT \cite{dash1}.
 A significant contribution of this research past that is the endorsement of AI-enabled training tools like viCyber.
-AI tools like that can provide real-time feedback, and can even adapt to each user's understanding level, allowing the aforementioned accountability to come more naturally \cite{dash1}.
+AI tools like this can provide real-time feedback, and can even adapt to each user's understanding level, allowing the aforementioned accountability to come more naturally \cite{dash1}.
 The authors found that adaptable systems like these are more effective than traditional "one-size-fits-all" Massive Online Open Courses (MOOCs) because they can be tailored in efficient and individualized ways \cite{dash1}.
 
 %\item Limitations and Gaps
 But, the paper still did not completely solve the user education crisis. 
 While they do advocate for robust personalized security training to protect users from phishing, the authors also identified a literature gap regarding AI-based security training efficacy, which the study itself barely begins to fill.
 Another notable limitation here is the warning that high expectations from executives can create an unhealthy security climate if technical defense is neglected. 
-Just because training supports security doesn't mean it replaces it \cite{dash1}. 
+Just because better training supports security teams doesn't mean that other security factors can just be let go \cite{dash1}. 
 Additionally, the paper mentions that the viCyber tool is still a "work in progress", and acknowledges that many organizations struggle to implement complex frameworks like NICE due to a lack of domain experts on payroll.
-This all indicates that the concepts are indeed sound, they are just expectedly not a silver bullet without further development.
-
+This all indicates that while the concepts are indeed sound, they are just expectedly not a silver bullet without further development.
 
 \subsection{20XX: TODO}
 
@@ -214,7 +215,7 @@ This all indicates that the concepts are indeed sound, they are just expectedly 
 
 
 
-%%%% Help Messages from IEEE:
+%%%% Help Messages from IEEE (moved to the bottom to not be lost):
 
 %% \subsection{Identify the Headings}
 
