@@ -81,7 +81,32 @@ These criteria, alongside with the above requirements and toolsets, allowed us t
 %\end{itemize}
 
 \subsection{2019: iMCircle: Automatic Mining of Indicators of Compromise from the Web} % @j-recasens I am thinking going chronological might work best for easiness. You have done a lit review for Dr. Viji before though so let me know.
-To begin, we start with our oldest paper from 2019, as this paper shows the limitations of the research into spam indicators before the usage of modern ML techniques like large Language models.
+%\item The Problem Addressed
+To begin, we start with our oldest paper from 2019, as this paper shows the limitations of the research into spam indicators before the usage of modern semantic ML techniques.
+Authors Zhang, Ya, Liu, Li, Shi, and Gu for this paper prioritized the fact that before we can remediate and prevent spam and phishing, we have to know what spam and phishing actually \textit{is} via data collection.
+And while that is a valorous cause for research, there are significant limitations with traditional Cyber Threat Intelligence (CTI) gathering regarding those indicators.
+Modern CTI which often relies on a "fixed-point" monitoring of curated data feeds from sources like like security organizations and white papers \cite{zhang1}.
+It also should be noted that "fixed-point" here refers to when detection systems make a baseline "secure" configuration, and an institution then marks all modifications to that baseline as insecure.
+This conventional approach is described as time-consuming and heavily complicated by the authors because it required researchers to clean data from multiple disparate sources, and to wait for information to be released by specific providers as public.
+Consequently, current methods may suffer from incomplete coverage and data delays, meaning this traditional methods fail to keep pace with the rapidly evolving landscape of cyber threats, as every second counts when triaging.
+
+%\item Methods or Approaches Used
+To solve this, the authors developed a system called iMCircle.
+The iMCircle system employs an active recursive architecture consisting of four primary components: a search engine crawler, an information preprocessor, an IOC checker and generator, and a new "seed" extractor (with seeds being the inputs for the next run of the iMCircle recursion) \cite{zhang1}.
+Unlike former passive systems, iMCircle takes spam and phishing indicators (like domains and IPs) and combines them with a "target threat field" (i.e. "APT attack") to create search engine queries for exploratary data collection.
+It uses Google to retrieve relevant public information, which is then processed using Natural Language Processing (NLP) techniques to extract semantic features from titles, URLs, and snippets \cite{zhang1}.
+Machine learning models like Support Vector Machines (SVM) and Decision Trees classify whether an indicator is a legitimate threat. Validated IOCs are then used to extract new seeds from their associated webpages, restarting the cycle.
+
+%\item Key Findings and Contributions
+The study's primary contribution with this cyclical approach is the development of the first system (according to the authors) that mines IOCs continuously and automatically by checking suspicious indicators against open-source threat information. Since the time of this paper aswell, we have seen many security scraping efforts be prioritized aswell \cite{zhang1}. During a two-month real-world evaluation, the system demonstrated significant efficacy: the SVM model achieved a precision of 96.70\% and an F1 score of 90.46\% in identifying threat indicators. Furthermore, iMCircle successfully discovered 2,941 unique data sources, including more niche and varied public sources that traditional monitoring might overlook. That ability to get fresh data, rather than recycled was of considerable satisfaction from the authors \cite{zhang1}.
+
+%\item Limitations or Gaps
+But, while iMCircle showed impressive performance, the paper did still acknowledge several limitations.
+Firstly, the system is entirely dependent on open-source information available on the Web; it cannot identify or verify suspicious indicators that have not been publicly discussed or indexed by search engines.
+This also means it was not tested on private repository information either for organization specific results \cite{zhang1}.
+There is also a disproportionate reliance on the quality and accuracy of search engine results, with the authors notinh that crawling restrictions and empty results can reduce and fluctiate the usable sample size \cite{zhang1}.
+And lastly, the current implementation primarily focuses on a few metrics like domain names and Advanced Persistent Threat attacks (APT).
+So while the authors suggest that iMCircle could  be adapted for other indicators like IP addresses or botnets, novel combinations like those would require further validation to prove the system's comprehensiveness across the entire threat landscape.
 
 \subsection{20XX: TODO}
 
