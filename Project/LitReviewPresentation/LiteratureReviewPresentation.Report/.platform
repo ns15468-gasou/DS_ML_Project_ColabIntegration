@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "LiteratureReviewPresentation"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "0ea6c7ce-c8f9-4625-9d16-36c31329a651"
+  }
+}

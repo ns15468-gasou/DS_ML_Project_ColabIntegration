@@ -1,0 +1,51 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.6.0/schema.json",
+  "name": "178207c8c0803c04b0ca",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "height": 150.48153054622753,
+    "width": 1279.093009642934,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Existing Semantic Approaches to ",
+                    "textStyle": {
+                      "fontFamily": "DIN",
+                      "fontSize": "44pt"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "center"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Spam and Phishing Detection",
+                    "textStyle": {
+                      "fontFamily": "DIN",
+                      "fontSize": "44pt"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "center"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "parentGroupName": "0dffcfa0ee48368561d2"
+}
