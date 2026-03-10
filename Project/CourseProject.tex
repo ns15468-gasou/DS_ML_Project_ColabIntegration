@@ -11,6 +11,8 @@
 \usepackage[colorlinks=true,urlcolor=blue,linkcolor=blue]{hyperref} % To allow Alt Text and Linking for Headers, and to allow blue, underlined URL hyperlinks
 \usepackage{float} % For easier figure alignment
 \usepackage{tikz} % To allow for diagramming
+\usepackage{pgfplots} % To allow for charts
+\pgfplotsset{compat=1.18}
 \usetikzlibrary{positioning,arrows.meta,shapes.geometric,fit,backgrounds,calc}
 
 % Define styles usage of tikz later
@@ -102,8 +104,8 @@ No technical system operates in a vacuum, and as such, there is a robust categor
 \subsection{Overall Literature Synthesis and Conclusion}
 Two common themes reveal themselves across these papers. First, existing tools are commonly vulnerable to zero-day attacks, which suggest the need for robust ML and deep learning tools. From the reactive blocklists reviewed by Zieni et al.\cite{zieni_phishing_2023} to the phishing kit clustering of Brezeanu et al.\cite{brezeanu_phish_2025} to the retrieval-augmented classification of APOLLO\cite{desolda_apollo_2025}, every system reviewed encounters the same fundamental constraint: detection accuracy degrades sharply when the threat has not been seen before. Brezeanu's Phish Fighter requires a minimum of three pages from a new kit before it can form a cluster, and APOLLO's performance actually worsens when VirusTotal returns uncertain data on newly minted URLs. Even iMCircle, which was designed specifically for continuous discovery, can only surface indicators that have already been publicly discussed somewhere on the open web\cite{zhang1}. The zero-day problem is not merely a limitation noted in passing by these authors; it is the central unsolved challenge that connects the entire body of work reviewed here.
 Second, the ability to meet this need exists, but is still in its infancy, with effective ML tools having only existed for a matter of a few years. The progression visible across the papers is striking: Saidani et al.\cite{saidani1} advanced past bag-of-words with domain-specific semantic rules in 2020, Sonowal and Gunikhan\cite{sonowal1} showed that careful feature engineering could make ML viable even on resource-constrained mobile devices, and by 2025, APOLLO demonstrated that a general-purpose LLM could classify phishing emails at 97.4\% accuracy without any hand-crafted features at all\cite{desolda_apollo_2025}. 
-Our project would aim to reconcile the findings and shortcomings of these papers by utilizing cutting-edge ML tools for the purpose of highly accurate and immediate phishing detection. Specifically, the research gaps identified here point toward a system that can operate effectively against novel threats without requiring a warm-up period of previously seen examples, that can leverage the semantic reasoning capabilities demonstrated by LLM-based approaches while maintaining the structural analysis strengths shown by methods like Phish Fighter, and that produces outputs interpretable enough to support the human end user who remains, as this review has shown, the last and most variable line of defense.
-
+Our project would aim to reconcile the findings and shortcomings of these papers by utilizing cutting-edge ML tools for the purpose of highly accurate and immediate phishing detection. Specifically, the research gaps identified here point toward needing a system that can operate effectively against novel threats without requiring a warm-up period of previously seen examples, that can leverage the semantic reasoning capabilities demonstrated by LLM-based approaches while maintaining the structural analysis strengths shown by methods like Phish Fighter, and that produces outputs interpretable enough to support the human end user who remains, as this review has shown, the last and most variable line of defense. We aim to contribute to these gaps by looking at the most fundamental of phishing data (domains) in order to expand upon the previously unanalyzed base semantic data that underpins modern cybersecurity blocking.
+\raggedbottom
 \section{Data Processing and Framework Diagram}
 All data is stored on Google Cloud Storage Containers, primarily to achieve the goal that our results can be replicated by our professor.
 
@@ -164,7 +166,7 @@ All data is stored on Google Cloud Storage Containers, primarily to achieve the 
 %     THRESHOLD --> BLOCKLIST
 %     CLASSIFY --> SCORING
 %     ZERODAY --> EXPLAIN
-\begin{figure}[H]
+\begin{figure}
 \resizebox{\columnwidth}{!}{% use resizebox to ensure the diagram fits within the column width of our pape
 \begin{tikzpicture}[node distance=1cm and 0.8cm]
 % 1 - Data Sources
@@ -226,6 +228,84 @@ All data is stored on Google Cloud Storage Containers, primarily to achieve the 
 }% end resizebox
 \centering
 \caption{Framework Diagram}
+\end{figure}
+
+% The below diagram was based on the output of pandas describe on our base dataset
+\begin{figure}[H]
+\texttt{
+Avg PhishTank URL length     : 71.2\newline
+Avg PhishTank host length    : 20.2\newline
+Avg Tranco domain length     : 12.3\newline
+Median PhishTank URL length  : 38\newline
+Median Tranco domain length  : 12\newline
+Mean hyphens — PhishTank     : 0.93\newline
+Mean hyphens — Tranco        : 0.09\newline
+Mean digit ratio — PhishTank : 0.1023\newline
+Mean digit ratio — Tranco    : 0.0124\newline
+PhishTank unique hosts       : 8,271\newline
+Tranco unique domains        : 50,000
+}
+\centering
+\caption{Data Shape from Exploratory Data Analysis}
+\end{figure}
+
+% The below diagram was based on Pandas code, and converted to pgfplots with Pandoc, a LaTeX formatting and conversion tool
+% Raw Pandas code is:
+%fig, ax = plt.subplots(figsize=(10, 6))
+%phish_host_counts.head(20).plot.barh(ax=ax, color="mediumpurple", %edgecolor="white")
+%ax.set_title("PhishTank - Top 20 Hosting Domains")
+%ax.set_xlabel("Number of Phishing URLs")
+%ax.invert_yaxis()
+%# Add value labels on bars
+%for i, v in enumerate(phish_host_counts.head(20)):
+%    ax.text(v + 1, i, str(v), va="center", fontsize=9)
+%plt.tight_layout()
+%fig.savefig(os.path.join(OUT, "03_phish_top_hosts.png"))
+%plt.close(fig)
+\begin{figure}[H]
+\resizebox{\columnwidth}{!}{% use resizebox to ensure the diagram fits within the column width of our pape
+\begin{tikzpicture}
+    \begin{axis}[
+        xbar,
+        width=12cm,
+        height=7cm,
+        xmin=0, xmax=3600,
+        xlabel={Number of Phishing URLs},
+        ylabel={Hoster},
+        title={\textbf{PhishTank --- Top 10 Hosting Domains}},
+        symbolic y coords={
+            ipfs.io, ipfs.best-practice.se, www.dropbox.com, 
+            l.ead.me, q-r.to, qrco.de, bit.ly, sites.google.com, 
+            new.express.adobe.com, docs.google.com
+        },
+        ytick=data,
+        nodes near coords, % Displays the values at the end of the bars
+        nodes near coords align={horizontal},
+        axis x line*=bottom,
+        axis y line*=left,
+        bar width=0.4cm,
+        enlarge y limits=0.03,
+        tick label style={font=\small},
+        label style={font=\small},
+        title style={font=\large},
+    ]
+        \addplot[fill=gray,draw=none] coordinates {
+            (114,ipfs.io)
+            (232,ipfs.best-practice.se)
+            (319,www.dropbox.com)
+            (389,l.ead.me)
+            (396,q-r.to)
+            (682,qrco.de)
+            (686,bit.ly)
+            (761,sites.google.com)
+            (1034,new.express.adobe.com)
+            (3408,docs.google.com)
+        };
+    \end{axis}
+\end{tikzpicture}
+}% end resizebox
+\centering
+\caption{Showcase of Deduplication Needs}
 \end{figure}
 
 % including wrangling, cleaning, and exploratory visualizations
