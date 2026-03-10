@@ -96,10 +96,10 @@ The earliest theme in the research of IoCs addresses detection of spam and phish
 A second thread in the literature pushes beyond reactive detection toward proactively building threat intelligence. Zhang et al. \cite{zhang1} identify that before spam and phishing can be remediated, we have to know what they actually \textit{are} via data collection, noting that conventional CTI relies on "fixed-point" monitoring of curated feeds that is time-consuming, delayed, and incomplete. Their iMCircle system addresses this with an active recursive architecture that mines IoCs continuously from open-source web data using NLP and SVM classification, achieving 96.70\% precision and an F1 score of 90.46\% \cite{zhang1}. However, the system remains entirely dependent on publicly indexed information and cannot surface threats not yet discussed on the open web \cite{zhang1}. Zieni, Massari, and Calzarossa \cite{zieni_phishing_2023} complement this by surveying the broader detection landscape, finding not a single technical gap but a fragmentation of approaches across list-based, similarity-based, and ML-based methods. Their survey identifies Random Forest as the most consistently performant traditional algorithm, while also flagging a critical research gap: URL shortening services render most lexical URL features meaningless \cite{zieni_phishing_2023}.
 
 \subsubsection{Proactive Prevention of Attacks}
-The most recent papers in the review target prevention rather than detection, driven by capabilities unlocked by large language models and self-updating ML systems. Brezeanu, Archip, and Artene \cite{brezeanu_phish_2025} observe that phishing kits --- reusable HTML templates allowing attackers to rapidly deploy fraudulent pages --- frequently reuse identical HTML structures across campaigns, making the underlying code structure a more reliable detection signal than visual or textual content. Their Phish Fighter system applies agglomerative hierarchical clustering and a self-retraining Random Forest classifier, achieving weighted precision, recall, and F1 scores exceeding 90\% \cite{brezeanu_phish_2025}. Desolda, Greco, and Viganò \cite{desolda_apollo_2025} address a parallel problem: that no existing system achieves perfect accuracy, meaning borderline cases reach the user, and the warnings users actually see in browsers and email clients are widely ineffective. Their APOLLO system, powered by GPT-4o, achieved 97.4\% accuracy without hand-crafted features, rising to 99.9\% when mature VirusTotal data was available \cite{desolda_apollo_2025}. Critically, both systems still encounter the zero-day ceiling: Phish Fighter requires a minimum of three pages from a new kit before clustering, and APOLLO's performance worsens when VirusTotal returns uncertain data on newly minted URLs \cite{brezeanu_phish_2025, desolda_apollo_2025}.
+The most recent papers in the review target prevention rather than detection, driven by capabilities unlocked by large language models and self-updating ML systems. Brezeanu, Archip, and Artene \cite{brezeanu_phish_2025} observe that phishing kits --- reusable HTML templates allowing attackers to rapidly deploy fraudulent pages --- frequently reuse identical HTML structures across campaigns, making the underlying code structure a more reliable detection signal than visual or textual content. Their Phish Fighter system applies agglomerative hierarchical clustering and a self-retraining Random Forest classifier, achieving weighted precision, recall, and F1 scores exceeding 90\% \cite{brezeanu_phish_2025}. Desolda, Greco, and Viganò \cite{desolda_apollo_2025} address a parallel problem: that no existing system achieves perfect accuracy, meaning borderline cases reach the user, and the warnings users actually see in browsers and email clients are widely ineffective. Their APOLLO system, powered by GPT-4o, achieved 97.4\% accuracy without hand-crafted features, rising to 99.9\% when mature VirusTotal data was available \cite{desolda_apollo_2025}. Critically, both systems still encounter the zero-day ceiling: Phish Fighter requires a minimum of three pages from a new kit before clustering, and APOLLO's performance worsens when VirusTotal returns uncertain data on newly minted URLs \cite{brezeanu_phish_2025, desolda_apollo_2025}. These are key areas where domain semantics may be able to shine in our research.
 
 \subsubsection{Psychological Studies}
-No technical system operates in a vacuum, and as such, there is a robust category of research evaluating the factors affecting phishing attacks once they become a false negative. Dash and Ansari \cite{dash1} note that despite advancements in defensive systems, "naïve information security practices" account for between 72\% and 95\% of all cyber threats, motivating their study of AI-enabled training tools like viCyber, which can provide real-time feedback and adapt to each user's understanding level \cite{dash1}. Sarno, Harris, and Black \cite{dawn_m_sarno_which_2023} ground this in empirical data, finding that some phishing emails will inevitably reach the inbox, at which point the user becomes the last line of defense. Their regression study of 150 participants found that younger adults were most susceptible --- directly contradicting the popular assumption that older adults are the most vulnerable population --- and that self-reported phishing experience may foster overconfidence rather than genuine detection skill \cite{dawn_m_sarno_which_2023}. Together, these papers reinforce that interpretable outputs and end-user empowerment are not secondary concerns but core requirements for any detection system.
+No technical system operates in a vacuum, and as such, there is a robust category of research evaluating the factors affecting phishing attacks once they become a false negative. Dash and Ansari \cite{dash1} note that despite advancements in defensive systems, "naïve information security practices" account for between 72\% and 95\% of all cyber threats, motivating their study of AI-enabled training tools like viCyber, which can provide real-time feedback and adapt to each user's understanding level \cite{dash1}. Sarno, Harris, and Black \cite{dawn_m_sarno_which_2023} ground this in empirical data, finding that some phishing emails will inevitably reach the inbox, at which point the user becomes the last line of defense. Their regression study of 150 participants found that younger adults were most susceptible --- directly contradicting the popular assumption that older adults are the most vulnerable population --- and that self-reported phishing experience may foster overconfidence rather than genuine detection skill \cite{dawn_m_sarno_which_2023}. Together, these papers reinforce that interpretable outputs and end-user empowerment are not secondary concerns but core requirements for any detection system, including the detections proposed by our team's research.
 
 \subsection{Overall Literature Synthesis and Conclusion}
 Two common themes reveal themselves across these papers. First, existing tools are commonly vulnerable to zero-day attacks, which suggest the need for robust ML and deep learning tools. From the reactive blocklists reviewed by Zieni et al.\cite{zieni_phishing_2023} to the phishing kit clustering of Brezeanu et al.\cite{brezeanu_phish_2025} to the retrieval-augmented classification of APOLLO\cite{desolda_apollo_2025}, every system reviewed encounters the same fundamental constraint: detection accuracy degrades sharply when the threat has not been seen before. Brezeanu's Phish Fighter requires a minimum of three pages from a new kit before it can form a cluster, and APOLLO's performance actually worsens when VirusTotal returns uncertain data on newly minted URLs. Even iMCircle, which was designed specifically for continuous discovery, can only surface indicators that have already been publicly discussed somewhere on the open web\cite{zhang1}. The zero-day problem is not merely a limitation noted in passing by these authors; it is the central unsolved challenge that connects the entire body of work reviewed here.
@@ -123,10 +123,10 @@ Avg PhishTank host length    : 20.2\newline
 Avg Tranco domain length     : 12.3\newline
 Median PhishTank URL length  : 38\newline
 Median Tranco domain length  : 12\newline
-Mean hyphens — PhishTank     : 0.93\newline
-Mean hyphens — Tranco        : 0.09\newline
-Mean digit ratio — PhishTank : 0.1023\newline
-Mean digit ratio — Tranco    : 0.0124\newline
+Mean hyphens - PhishTank     : 0.93\newline
+Mean hyphens - Tranco        : 0.09\newline
+Mean digit ratio - PhishTank : 0.1023\newline
+Mean digit ratio - Tranco    : 0.0124\newline
 PhishTank unique URLs        : 55,625\newline
 PhishTank unique domains     : 8,271\newline
 Tranco unique domains        : 50,000
@@ -209,7 +209,7 @@ Embedding is the process of turning regular text into multi-dimensional vectors,
 Since these vectors represent encoded semantic data, closeness of vectors correlates to closeness of semantic meaning, letting us extract answers from the data using semantic reasoning.
 Training our own embeddings / semantic model was not the goal nor scope of our project, but rather using data science to analyze the semantic depth behind the domains once embedded.
 
-Once embeddings are made and compared, they will have to be stored and aggregated, as the raw results of our team's cosine similarity data came out to 23GB of data, with over 2.7 billion vector comparisons occurring. From there, we can do correlation, classification, and novel data testing to gleam insights on how the data's semantic layer adds on to the capabilities exposed in the literature review. With modern tools like vector databases, we could see already effective tools like iMCircle and Apollo gain a new semantic level of data for automatic decision making \cite{desolda_apollo_2025, zhang1}. Figure 3 shows all of this in a formalized Framework Diagram. The explained steps above each feed into each other, and through our diligent following of the outlined framework, our team has the resources to provide answers and context to our research question about the efficacy of domain semantics.
+Once embeddings are made and compared, they will have to be stored and aggregated, as the raw results of our team's cosine similarity data came out to 23GB of data, with over 2.7 billion vector comparisons occurring. That is too much to do in memory, so we plan to process the data line by line. From there, we can do correlation, classification, and novel data testing to gleam insights on how the data's semantic layer adds on to the capabilities exposed in the literature review. Figure 4 shows the basic shape of the embedded AI data as a preview of this analysis. With modern tools like vector databases, we could see already effective tools like iMCircle and Apollo gain a new semantic level of data for automatic decision making with these embeddings \cite{desolda_apollo_2025, zhang1}. Figure 3 shows all of this in a formalized Framework Diagram. The explained steps above each feed into each other, and through our diligent following of the outlined framework, our team has the resources to provide answers and context to our research question about the efficacy of domain semantics.
 
 % The below diagram was based on Mermaid code, and converted to tikz with Pandoc, a LaTeX formatting and conversion tool
 % Raw Mermaid code is:
@@ -330,6 +330,39 @@ Once embeddings are made and compared, they will have to be stored and aggregate
 }% end resizebox
 \centering
 \caption{Framework Diagram}
+\end{figure}
+
+% The below diagram was based on the output of basic data summarization of cosine similarity data
+\begin{figure}[H]
+\resizebox{\columnwidth}{!}{% use resizebox to ensure the diagram fits within the column width of our pape
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Top 50k Domain} & \textbf{Top PhishTank Match} & \textbf{Cosine Similiarity} \\
+\hline
+chateauversailles.fr & chateauversalles.fr & 0.92593 \\
+\hline
+tdsynnex.com & tdsynnexdeveloper.com & 0.924352 \\
+\hline
+daiwa.co.jp & daiwa.jp & 0.922306 \\
+\hline
+tronlink.org & tronlink.org.uk & 0.922023 \\
+\hline
+bradescoprime.com.br & bradesco.primeoficial.com & 0.920717 \\
+\hline
+sncf-connect.com & sncf-connect.app & 0.918135 \\
+\hline
+scrtc.com & scrtc.weebly.com & 0.915968 \\
+\hline
+lassuranceretraite.fr & lassuranceretraite.net & 0.914879 \\
+\hline
+t-2.net & t-2net.com? & 0.91394 \\
+\hline
+hushmail.com & hushmail.web.app & 0.912192 \\
+\hline
+\end{tabular}
+}
+\centering
+\caption{Top 10 Semantically Similar Domains Between Datasets (Example of Embeddings Data Use Case)}
 \end{figure}
 
 %\section{Methodology}
