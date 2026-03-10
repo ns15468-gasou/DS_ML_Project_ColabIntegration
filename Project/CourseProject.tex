@@ -9,9 +9,20 @@
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage[colorlinks=true,urlcolor=blue,linkcolor=blue]{hyperref} % To allow Alt Text and Linking for Headers, and to allow blue, underlined URL hyperlinks
+\usepackage{float} % For easier figure alignment
+\usepackage{tikz} % To allow for diagramming
+\usetikzlibrary{positioning,arrows.meta,shapes.geometric,fit,backgrounds,calc}
+
+% Define styles usage of tikz later
+\tikzset{
+    block/.style={rectangle, draw=black!70, fill=blue!5, thick, rounded corners,
+        align=center, font=\footnotesize, minimum height=0.8cm, text width=2.8cm},
+    subgraph/.style={rectangle, draw=black!80, thick, rounded corners, inner sep=6pt},
+    arrow/.style={-{Stealth[length=2.5mm]}, thick}
+}
 
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
-    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}} % Previous lines from IEEE template
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}} % Boilerplate lines from IEEE template
 \begin{document}
 
 \title{Semantic Analysis of Domain Data for Proactive Identification of Cybersecurity Indicators}
@@ -72,17 +83,17 @@ And speaking of scope, the primary \textit{inclusion} criteria was related to th
 Many useful articles at the beginning of semantic analysis for spam prevention were made in the late 2000's, but they were specifically asked to be ignored for this paper by the paper requirements.
 As such, only 'recent' research was provided, meaning publication dates past 2020 as much as it could be helped.
 These criteria, alongside with the above requirements and toolset mindsets, allowed us to choose the below 8 papers to systematically review.
-
-\subsection{Reactive Detection of Attacks}
+\subsection{Systematic Literature Review}
+\subsubsection{Reactive Detection of Attacks}
 The earliest theme addresses detection of spam and phishing as it occurs. Saidani, Adi, and Allili \cite{saidani1} confront the fact that spam continues to account for over 56\% of total email traffic, yet traditional detection systems largely rely on the provenly ineffectual "bag-of-words" model, which evaluates emails as an unstructured collection of independent words without considering grammar, context, or word order. Spammers purposefully exploit the weaknesses of basic keyword filters through obfuscation, motivating their proposed two-level semantic classification framework, which achieved up to 98\% accuracy across domain-specific classifiers \cite{saidani1}. Sonowal and Gunikhan \cite{sonowal1} extend this challenge to SMS, noting that unlike email's 20-30\% open rates, SMS messages boast a staggering 98\% open rate, making smishing a disproportionately dangerous vector. Their feature-based approach reduced 52 input dimensions to just 20 via Kendall rank correlation --- a 61.53\% decrease --- while maintaining 98\% accuracy, a reduction critical for viability on resource-constrained mobile devices \cite{sonowal1}. Both papers share a common vulnerability: as generative AI tools become more indistinguishable when mimicking professional readability, the semantic dissonance these systems rely on may diminish \cite{sonowal1}.
 
-\subsection{Proactive Data Gathering}
+\subsubsection{Proactive Data Gathering}
 A second thread in the literature pushes beyond reactive detection toward proactively building threat intelligence. Zhang et al. \cite{zhang1} identify that before spam and phishing can be remediated, we have to know what they actually \textit{are} via data collection, noting that conventional CTI relies on "fixed-point" monitoring of curated feeds that is time-consuming, delayed, and incomplete. Their iMCircle system addresses this with an active recursive architecture that mines IoCs continuously from open-source web data using NLP and SVM classification, achieving 96.70\% precision and an F1 score of 90.46\% \cite{zhang1}. However, the system remains entirely dependent on publicly indexed information and cannot surface threats not yet discussed on the open web \cite{zhang1}. Zieni, Massari, and Calzarossa \cite{zieni_phishing_2023} complement this by surveying the broader detection landscape, finding not a single technical gap but a fragmentation of approaches across list-based, similarity-based, and ML-based methods. Their survey identifies Random Forest as the most consistently performant traditional algorithm, while also flagging a critical research gap: URL shortening services render most lexical URL features meaningless \cite{zieni_phishing_2023}.
 
-\subsection{Proactive Prevention of Attacks}
+\subsubsection{Proactive Prevention of Attacks}
 The most recent papers in the review target prevention rather than detection, driven by capabilities unlocked by large language models and self-updating ML systems. Brezeanu, Archip, and Artene \cite{brezeanu_phish_2025} observe that phishing kits --- reusable HTML templates allowing attackers to rapidly deploy fraudulent pages --- frequently reuse identical HTML structures across campaigns, making the underlying code structure a more reliable detection signal than visual or textual content. Their Phish Fighter system applies agglomerative hierarchical clustering and a self-retraining Random Forest classifier, achieving weighted precision, recall, and F1 scores exceeding 90\% \cite{brezeanu_phish_2025}. Desolda, Greco, and Viganò \cite{desolda_apollo_2025} address a parallel problem: that no existing system achieves perfect accuracy, meaning borderline cases reach the user, and the warnings users actually see in browsers and email clients are widely ineffective. Their APOLLO system, powered by GPT-4o, achieved 97.4\% accuracy without hand-crafted features, rising to 99.9\% when mature VirusTotal data was available \cite{desolda_apollo_2025}. Critically, both systems still encounter the zero-day ceiling: Phish Fighter requires a minimum of three pages from a new kit before clustering, and APOLLO's performance worsens when VirusTotal returns uncertain data on newly minted URLs \cite{brezeanu_phish_2025, desolda_apollo_2025}.
 
-\subsection{Psychological Studies}
+\subsubsection{Psychological Studies}
 No technical system operates in a vacuum. Dash and Ansari \cite{dash1} note that despite advancements in defensive systems, "naïve information security practices" account for between 72\% and 95\% of all cyber threats, motivating their study of AI-enabled training tools like viCyber, which can provide real-time feedback and adapt to each user's understanding level \cite{dash1}. Sarno, Harris, and Black \cite{dawn_m_sarno_which_2023} ground this in empirical data, finding that some phishing emails will inevitably reach the inbox, at which point the user becomes the last line of defense. Their regression study of 150 participants found that younger adults were most susceptible --- directly contradicting the popular assumption that older adults are the most vulnerable population --- and that self-reported phishing experience may foster overconfidence rather than genuine detection skill \cite{dawn_m_sarno_which_2023}. Together, these papers reinforce that interpretable outputs and end-user empowerment are not secondary concerns but core requirements for any detection system.
 
 \subsection{Overall Literature Synthesis and Conclusion}
@@ -94,6 +105,128 @@ Our project would aim to reconcile the findings and shortcomings of these papers
 
 \section{Data Processing and Framework Diagram}
 All data is stored on Google Cloud Storage Containers, primarily to achieve the goal that our results can be replicated by our professor.
+
+% The below diagram was based on Mermaid code, and converted to tikz with Pandoc, a LaTeX formatting and conversion tool
+% Raw Mermaid code is:
+%flowchart TB
+%     subgraph SOURCES["<b>1 - Data Sources</b>"]
+%         direction LR
+%         TR["Tranco Top 50k List (Legitimate Domains)<br>50,000 ranked domains"]
+%         PT["PhishTank Dataset (Phishing URLs)<br>55,625 verified URLs"]
+%     end
+%     subgraph PREPROCESS["<b>2 - Data Cleaning</b>"]
+%         direction LR
+%         CLEAN_TR["Domain Extraction, Deduplication, and basic EDA"]
+%     end
+%     subgraph EMBED["<b>3 - Embedding Generation</b>"]
+%         direction LR
+%         API["Google Gemini Embedding API (Cloud Run)<br>(batches of 200)"]
+%         EMB_TR["Tranco Embeddings<br>50,000 vectors"]
+%         EMB_PT["PhishTank Embeddings<br>55,625 vectors"]
+%     end
+%     subgraph SIMILARITY["<b>4 - Cosine Similarity</b>"]
+%         direction TB
+%         MATRIX["Full Similarity Matrix<br>≈2.78 billion pairs, 23 GB of vector data on disk"]
+%         TOP5R["Phishes compared to Legitimate Domains"]
+%         TOP5C["Legitimate Domains compared to Phishes"]
+%     end
+%     subgraph EDA["<b>5 - Exploratory Analysis</b>"]
+%         direction LR
+%         SIM_EDA["Distributions, Outliers, and Plotting"]
+%     end
+%     subgraph FUTURE["<b>6 - Future Analysis</b>"]
+%         direction TB
+%         THRESHOLD["Determine Cosine Similarity Thresholds"]
+%         CLASSIFY["Model Training and Classification of Features"]
+%         ZERODAY["Potential Tests on Novel / Zero Day Data"]
+%     end
+%     subgraph OUTCOME["<b>7 - Future Outcomes</b>"]
+%         direction LR
+%         BLOCKLIST["Proactive Blocklist Generation"]
+%         SCORING["Real-Time<br>Risk Scoring<br>for New Domains"]
+%         EXPLAIN["Interpretable<br>Alerts for<br>End Users"]
+%     end
+%     TR --> CLEAN_TR
+%     PT --> CLEAN_TR
+%     CLEAN_TR --> API
+%     API --> EMB_TR
+%     API --> EMB_PT
+%     EMB_TR --> MATRIX
+%     EMB_PT --> MATRIX
+%     MATRIX --> TOP5R
+%     MATRIX --> TOP5C
+%     TOP5R --> SIM_EDA
+%     TOP5C --> SIM_EDA
+%     SIM_EDA --> THRESHOLD
+%     SIM_EDA --> CLASSIFY
+%     SIM_EDA --> ZERODAY
+%     THRESHOLD --> BLOCKLIST
+%     CLASSIFY --> SCORING
+%     ZERODAY --> EXPLAIN
+\begin{figure}[H]
+\resizebox{\columnwidth}{!}{% use resizebox to ensure the diagram fits within the column width of our pape
+\begin{tikzpicture}[node distance=1cm and 0.8cm]
+% 1 - Data Sources
+\node[block] (TR) {\textbf{Tranco Top 50k}\\Legitimate Domains};
+\node[block, right=of TR] (PT) {\textbf{PhishTank}\\55,625 Phishing URLs};
+\node[subgraph, fit=(TR)(PT), label={[font=\bfseries\footnotesize]above:Data Sources}] {};
+
+% 2 - Data Cleaning
+\node[block, below=1.4cm of $(TR)!0.5!(PT)$] (CLEAN) {Domain Extraction,\\Dedup \& Basic EDA};
+\node[subgraph, fit=(CLEAN), label={[font=\bfseries\footnotesize]above:Data Cleaning}] {};
+
+% 3 - Embedding Generation
+\node[block, below=1.4cm of CLEAN] (API) {\textbf{Gemini Embedding API}\\(batches of 200)};
+\node[block, left=of API] (EMB_TR) {Tranco Embeddings\\50,000 vectors};
+\node[block, right=of API] (EMB_PT) {PhishTank Embeddings\\55,625 vectors};
+\node[subgraph, fit=(EMB_TR)(API)(EMB_PT), label={[font=\bfseries\footnotesize]above:Embedding Generation~~}] {};
+
+% 4 - Cosine Similarity
+\node[block, below=1.4cm of API] (MATRIX) {\textbf{Full Similarity Matrix}\\$\approx$2.78B pairs, 23\,GB};
+\node[block, below left=of MATRIX] (TOP5R) {Phishes vs.\\Legitimate Domains};
+\node[block, below right=of MATRIX] (TOP5C) {Legitimate Domains\\vs.\ Phishes};
+\node[subgraph, fit=(MATRIX)(TOP5R)(TOP5C), label={[font=\bfseries\footnotesize]above:Cosine Similarity}] {};
+
+% 5 - Exploratory Analysis
+\node[block, below=1.4cm of $(TOP5R)!0.5!(TOP5C)$] (EDA) {Distributions, Outliers\\\& Plotting};
+\node[subgraph, fit=(EDA), label={[font=\bfseries\footnotesize]above:Exploratory Analysis}] {};
+
+% 6 - Future Analysis
+\node[block, below=1.4cm of EDA] (THRESH) {Cosine Similarity\\Thresholds};
+\node[block, below left=of THRESH] (CLASS) {Data Wrangling \&\\Classification};
+\node[block, below right=of THRESH] (ZERO) {Zero-Day\\Testing};
+\node[subgraph, fit=(THRESH)(CLASS)(ZERO), label={[font=\bfseries\footnotesize]above:In-Depth Analysis~~}] {};
+
+% 7 - Future Outcomes
+\node[block, below=1.4cm of $(CLASS)!0!(ZERO)$] (BLOCK) {Proactive Blocklist\\Generation};
+\node[block, right=of BLOCK] (SCORE) {Real-Time\\Risk Scoring};
+\node[block, right=of SCORE] (ALERT) {Interpretable\\End-User Alerts};
+\node[subgraph, fit=(BLOCK)(SCORE)(ALERT), label={[fill=white,font=\bfseries\footnotesize]above:~~~Project Outcomes}] {};
+
+% Connections
+\draw[arrow] (TR) -- (CLEAN);
+\draw[arrow] (PT) -- (CLEAN);
+\draw[arrow] (CLEAN) -- (API);
+\draw[arrow] (API) -- (EMB_TR);
+\draw[arrow] (API) -- (EMB_PT);
+\draw[arrow] (EMB_TR) -- (MATRIX);
+\draw[arrow] (EMB_PT) -- (MATRIX);
+\draw[arrow] (MATRIX) -- (TOP5R);
+\draw[arrow] (MATRIX) -- (TOP5C);
+\draw[arrow] (TOP5R) -- (EDA);
+\draw[arrow] (TOP5C) -- (EDA);
+\draw[arrow] (EDA) -- (THRESH);
+\draw[arrow] (EDA) -- (CLASS);
+\draw[arrow] (EDA) -- (ZERO);
+\draw[arrow] (THRESH) -- (SCORE);
+\draw[arrow] (CLASS) -- (BLOCK);
+\draw[arrow] (ZERO) -- (ALERT);
+\end{tikzpicture}%
+}% end resizebox
+\centering
+\caption{Framework Diagram}
+\end{figure}
+
 % including wrangling, cleaning, and exploratory visualizations
 %% preliminary results, along with dataset details are required for revised review
 
