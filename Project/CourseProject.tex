@@ -107,6 +107,9 @@ Second, the ability to meet this need exists, but is still in its infancy, with 
 Our project would aim to reconcile the findings and shortcomings of these papers by utilizing cutting-edge ML tools for the purpose of highly accurate and immediate phishing detection. Specifically, the research gaps identified here point toward needing a system that can operate effectively against novel threats without requiring a warm-up period of previously seen examples, that can leverage the semantic reasoning capabilities demonstrated by LLM-based approaches while maintaining the structural analysis strengths shown by methods like Phish Fighter, and that produces outputs interpretable enough to support the human end user who remains, as this review has shown, the last and most variable line of defense. We aim to contribute to these gaps by looking at the most fundamental of phishing data (domains) in order to expand upon the previously unanalyzed base semantic data that underpins modern cybersecurity blocking.
 \raggedbottom
 \section{Data Processing and Framework Diagram}
+To identify indicators, we need both the indicators themselves, but also a control group, a set of data that we would consider an "Indicator of Integrity", or IoIs.
+IoIs let us see how we expect a legitimate domain to behave and be shaped like in our data.
+And speaking of that data, two data sources were chosen by our team. For IoCs, the Phishtank Verified dataset was chosen, as it had a reasonable amount of training data with 50k+ Phishing URLs verified as malicious by Cisco Talos \cite{phishtank}.
 All data is stored on Google Cloud Storage Containers, primarily to achieve the goal that our results can be replicated by our professor.
 
 % The below diagram was based on Mermaid code, and converted to tikz with Pandoc, a LaTeX formatting and conversion tool
