@@ -1,0 +1,1 @@
+This folder contains data and files that are not needed for the project to be presented nor be functional, but rather can be convenient to have in the repo regardless.
