@@ -43,8 +43,19 @@ ns15468@georgiasouthern.edu}}
 
 \maketitle
 
-%\section{Abstract}
-% 150 - 250 words
+\begin{abstract}
+The identification of malicious domains requires separating cybersecurity indicators between valid and phishing URLs.
+This paper presents a machine learning pipeline designed to predict whether a phishing URL is impersonating a specific legitimate domain, thus allowing a large proportion of malicious URLs to be proactively remediated.
+A robust lexical feature set was extracted from phishing URLs, including path depth, hyphen counts, and digit ratios.
+From there, to automatically establish a basis for impersonation, we utilized cosine similarity scores between Phishtank's known phishing URLs and the Tranco Top-1M legitimate domain dataset, applying a 75th-percentile threshold on semantic similarity to create a binary target variable.
+This generated target represents mined semantic metadata, with additional cleaning improving the accuracy of this target within our paper.
+After that, a Support Vector Machine with an RBF kernel was trained and optimized via randomized grid search to reach the proactive goal of our paper.
+This allowed ML classification to pick up after the semantic portion and automatically classify domains of note. 
+Model performance was rigorously evaluated using confusion matrices, ROC-AUC metrics, and linear SVM coefficients to ensure efficacy.
+Those metrics showed that our methodology successfully demonstrated that structural URL characteristics can effectively capture impersonation intent.
+Semantic and lexical analysis together ultimately allowed for the proactive prioritization and mitigation of malicious indicators, as domain impersonation was prioritized and categorized with via in-depth extraction of domain features.
+The semantic similarity reduced training data by 75\%, with lexical ML being able to reliably act upon the remaining data effectively.
+\end{abstract}
 
 \section{Introduction and Problem Statement} %@j-recasens @ns15468-gasou research question has to be added explicitly below for full points
 In the modern world, attackers are a step ahead of all Cybersecurity professionals. 
