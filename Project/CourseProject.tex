@@ -27,7 +27,7 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}} % Boilerplate lines from IEEE template
 \begin{document}
 
-\title{Semantic Analysis of Domain Data for Proactive Identification of Cybersecurity Indicators}
+\title{Semantic Prioritization of Domain Data for Proactive Identification of Cybersecurity Indicators}
 
 \author{\IEEEauthorblockN{Nic Recasens}
 \IEEEauthorblockA{\textit{Computer Science} \\
@@ -46,8 +46,7 @@ ns15468@georgiasouthern.edu}}
 %\section{Abstract}
 % 150 - 250 words
 
-\section{Introduction and Problem Statement}
-%@j-recasens @ns15468-gasou research question has to be added explicitly below for full points
+\section{Introduction and Problem Statement} %@j-recasens @ns15468-gasou research question has to be added explicitly below for full points
 In the modern world, attackers are a step ahead of all Cybersecurity professionals. 
 Professionals need to be able to adapt to every threat out there, while attackers only need to be able to adapt to a single fatal weakness.
 As such, the realm of machine learning and predictive analytics is of known importance in Cybersecurity research.
@@ -57,13 +56,13 @@ But with Ransomware and Malware becoming billion dollar multi-national black mar
 At the forefront of this prevention is the identification and blocking of spam and phishing.
 An individual datum related to spam and phishing is called an indicator of attack (IoA), and they let us know if someone is targeted by an attacker.
 And if they are used successfully, they become indicators of compromise (IoC).
-IoCs have the negative reputation of being indicative of failed Cybersecurity protection, but in relevance to this project, they are the second half of the puzzle that is semantic analysis of indicators.
+IoCs have the negative reputation of being indicative of failed Cybersecurity protection, but in relevance to this project, they are the second half of the puzzle that is semantic prioritization of indicators.
 Via the correlation of IoAs and/or IoCs, numerous researchers have pushed the boundary forward over the decades since the aforementioned 1990s.
 The attackers may be numerous in their successes, but they leave behind their own value as well: data. 
 With that data, we can see how pervasive cyber threats are, train models to simulate said attackers, and allow the very computers they attack help mitigate the risks themselves.
 Our team looked at these indicators, and asked what more can be done with these foundational data points now that Natural Language Processing (NLP) has grown so rapidly in so few years?
-Is there a correlation between reported compromises and a domain's semantic metadata?
-And critically, our guiding research question was this: \textbf{Do domain semantics predict real-world malicious activity to a statistically significant degree?}
+Is there a correlation between domain's lexical and semantic metadata?
+And critically, our guiding research question was this: \textbf{Do domain semantics help predict real-world malicious activity to a statistically significant degree?}
 Machine learning and data science stand on the forefront of successful action upon IoCs, and throughout this paper, we will show how important cyber-risk mitigation truly is in our modern interconnected world
 
 \section{Related Literature}
@@ -104,7 +103,7 @@ No technical system operates in a vacuum, and as such, there is a robust categor
 \subsection{Overall Literature Synthesis and Conclusion}
 Two common themes reveal themselves across these papers. First, existing tools are commonly vulnerable to zero-day attacks, which suggest the need for robust ML and deep learning tools. From the reactive blocklists reviewed by Zieni et al.\cite{zieni_phishing_2023} to the phishing kit clustering of Brezeanu et al.\cite{brezeanu_phish_2025} to the retrieval-augmented classification of APOLLO\cite{desolda_apollo_2025}, every system reviewed encounters the same fundamental constraint: detection accuracy degrades sharply when the threat has not been seen before. Brezeanu's Phish Fighter requires a minimum of three pages from a new kit before it can form a cluster, and APOLLO's performance actually worsens when VirusTotal returns uncertain data on newly minted URLs. Even iMCircle, which was designed specifically for continuous discovery, can only surface indicators that have already been publicly discussed somewhere on the open web\cite{zhang1}. The zero-day problem is not merely a limitation noted in passing by these authors; it is the central unsolved challenge that connects the entire body of work reviewed here.
 Second, the ability to meet this need exists, but is still in its infancy, with effective ML tools having only existed for a matter of a few years. The progression visible across the papers is striking: Saidani et al.\cite{saidani1} advanced past bag-of-words with domain-specific semantic rules in 2020, Sonowal and Gunikhan\cite{sonowal1} showed that careful feature engineering could make ML viable even on resource-constrained mobile devices, and by 2025, APOLLO demonstrated that a general-purpose LLM could classify phishing emails at 97.4\% accuracy without any hand-crafted features at all\cite{desolda_apollo_2025}. 
-Our project would aim to reconcile the findings and shortcomings of these papers by utilizing cutting-edge ML tools for the purpose of highly accurate and immediate phishing detection. Specifically, the research gaps identified here point toward needing a system that can operate effectively against novel threats without requiring a warm-up period of previously seen examples, that can leverage the semantic reasoning capabilities demonstrated by LLM-based approaches while maintaining the structural analysis strengths shown by methods like Phish Fighter, and that produces outputs interpretable enough to support the human end user who remains, as this review has shown, the last and most variable line of defense. We aim to contribute to these gaps by looking at the most fundamental of phishing data (domains) in order to expand upon the previously unanalyzed base semantic data that underpins modern cybersecurity blocking.
+Our project aims to reconcile the findings and shortcomings of these papers by utilizing cutting-edge ML tools for the purpose of highly accurate and immediate phishing detection. Specifically, the research gaps identified here point toward needing a system that can operate effectively against novel threats without requiring a warm-up period of previously seen IoCs, that can leverage the semantic reasoning capabilities demonstrated by LLM-based approaches while maintaining the structural analysis strengths shown by methods like Phish Fighter, and that produces outputs interpretable enough to support the human end user who remains, as this review has shown, the last and most variable line of defense. We aim to contribute to these gaps by looking at the most fundamental datum of phishing datasets (domains) in order to expand upon the previously unanalyzed base semantic data that underpins modern cybersecurity blocking. This is through extracting these domains semantic information, and using it to prioritize phish defense in a novel way.
 \raggedbottom
 \section{Data Processing and Framework Diagram}
 % including wrangling, cleaning, and exploratory visualizations
@@ -137,11 +136,11 @@ Tranco unique domains        : 50,000
 
 As expected, the data had to be cleaned and referenced for us to do meaningful analysis.
 All of our data is stored on Google Cloud Storage Containers, primarily to achieve the goal that our results can be replicated by our professor.
-Some of our data is so large that embedding it in the paper or code would be unreasonable, and neither dataset can be downloaded unauthenticated and managed easily.
+Cloud storage had to be used because some of our data is so large that embedding it in the paper or code would be unreasonable, and neither the Phishtank nor Tranco datasets can be downloaded unauthenticated additionally.
 We used Colab and Python to do analysis, with Pandas, Polar, MatPlotLib, and Seaborn as our foundational tools. 
 
 In terms of cleaning, the primary work is deduplication. A domain like "google.com" may have URLs of "https://www.google.com", "http://www.google.com", or even just minor differences like "google.com/" with a trailing slash \cite{phishtank}.
-And for the IoCs specifically, they have an issue of a large chunk of them being hosted by a legitimate (or at least largely used) hosting platform. As shown in Figure 2, many attackers use the perceived legitimacy of larger sites to hide in the crowd, and to create malicious payloads that HTTP based scanners may not be able to identify quickly.
+And for the IoCs specifically, they have an issue of a large chunk of them being hosted by a legitimate (or at least largely used) hosting platform. As shown in Figure 2, many attackers use the perceived legitimacy of larger sites to hide in the crowd, and to create malicious payloads that HTTP based scanners may not be able to identify quickly. This means when we train our ML later, we will need to filter out these hosting domains.
 
 % The below diagram was based on Pandas code, and converted to pgfplots with Pandoc, a LaTeX formatting and conversion tool
 % Raw Pandas code is:
@@ -202,14 +201,15 @@ And for the IoCs specifically, they have an issue of a large chunk of them being
 \caption{Showcase of Deduplication Needs}
 \end{figure}
 
-And past deduplication, both datasets do have lots of auxiliary info that while useful, would not reasonably be able to be embedded when we can't be assured that real world attacks would have said auxiliary data. So while Phishtank gives metrics like intended target that are useful for Exploratory Data Analysis (EDA), they are not in scope for our work. This means that from the raw data, the primary cleaning stages would be stripping irrelevant info for our purposes (like leading slashes), and focusing only on the domains themselves.
+And past deduplication, both datasets have lots of auxiliary info that while useful, would not reasonably be able to be embedded. This occurs when we can't be assured that real world attacks would have said auxiliary data. So while Phishtank gives metrics like intended target, that can be useful for Exploratory Data Analysis (EDA), but they are not in scope for our work. This means that from the raw data, the primary cleaning stages would be stripping irrelevant info for our purposes (like leading slashes), and focusing only on the domains themselves.
 
 Once a clean set of domains was grabbed, our team enacted "Text Embeddings" on the dataset using the \texttt{gemini-embedding-001} model available on the Google Cloud Platform.
-Embedding is the process of turning regular text into multi-dimensional vectors, in which processes like Cosine similarity and Euclidean distance can see how "close" the vectors are to each other [7].
-Since these vectors represent encoded semantic data, closeness of vectors correlates to closeness of semantic meaning, letting us extract answers from the data using semantic reasoning.
-Training our own embeddings / semantic model was not the goal nor scope of our project, but rather using data science to analyze the semantic depth behind the domains once embedded.
+Embedding is the process of turning regular text into multi-dimensional vectors, in which processes like Cosine similarity and Euclidean distance can see how "close" the vectors are to each other \cite{saidani1}.
+Our code base (expanded upon in the appendix) shows how we utilized Google's cutting edge Embedding platform.
+Since these vectors represent encoded semantic data, "closeness" of vectors correlates to closeness of semantic meaning, letting us extract answers from the data using semantic reasoning.
+To note, training our own embeddings / semantic model from scratch was not the goal nor scope of our project, but rather using data science to analyze the semantic depth behind the domains once embedded. That is why we were happy to use the pre-trained 3,072 dimensional Google Gemini embeddings framework \cite{a2024_embeddings}.
 
-Once embeddings are made and compared, they will have to be stored and aggregated, as the raw results of our team's cosine similarity data came out to 23GB of data, with over 2.7 billion vector comparisons occurring. That is too much to do in memory, so we plan to process the data line by line. From there, we can do correlation, classification, and novel data testing to gleam insights on how the data's semantic layer adds on to the capabilities exposed in the literature review. Figure 4 shows the basic shape of the embedded AI data as a preview of this analysis. With modern tools like vector databases, we could see already effective tools like iMCircle and Apollo gain a new semantic level of data for automatic decision making with these embeddings \cite{desolda_apollo_2025, zhang1}. Figure 3 shows all of this in a formalized Framework Diagram. The explained steps above each feed into each other, and through our diligent following of the outlined framework, our team has the resources to provide answers and context to our research question about the efficacy of domain semantics.
+Once embeddings are made and compared, they will have to be stored and aggregated, as the raw results of our team's cosine similarity data came out to 23GB of data, with over 2.7 billion vector comparisons occurring. That is too much to do in memory alone, so we process the data line by line and store to disk. From there, we do exploratory correlation, classification, and novel data testing to gleam insights on how the data's semantic layer adds on to the capabilities exposed in the literature review. Figure 4 shows the basic shape of the embedded AI data as a preview of this analysis. With modern tools like vector databases, we could see already effective tools like iMCircle and Apollo gain a new semantic level of data for automatic decision making with these embeddings \cite{desolda_apollo_2025, zhang1}. But for our process, we will use the closeness / similarity of the vectors as a filter, a sort of sift that allows us to train an SVM on the URL and it's features when a semantic hit occurs on the URL. Figure 3 shows all of this in a formalized Framework Diagram. The explained steps above each feed into each other, and through our diligent following of the outlined framework, our team has the resources to provide answers and context to our research question about the efficacy of domain semantics.
 
 % The below diagram was based on Mermaid code, and converted to tikz with Pandoc, a LaTeX formatting and conversion tool
 % Raw Mermaid code is:
