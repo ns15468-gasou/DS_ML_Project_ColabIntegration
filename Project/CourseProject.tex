@@ -376,7 +376,16 @@ hushmail.com & hushmail.web.app & 0.912192 \\
 \caption{Top 10 Semantically Similar Domains Between Datasets (Example of Embeddings Data Use Case)}
 \end{figure}
 
-%\section{Methodology}
+\section{Methodology}
+\subsection{Target Variable Construction}
+
+Raw URLs pulled from the Tranco and Phishtank datasets do not come labeled as "impersonating a specific domain"; at best, in the case of Phishtank, there is the Target attribute, but a mere 10\% of tuples have a Target attribute that is not labeled as \'other\'. 
+We utilized the cosine similarity data to implement this label. 
+If a URL scored above the 75th percentile for cosine similarity, it was marked as an impersonator.
+75th percentile was chosen to balance precision and coverage so as to minimize generic URLs getting flagged \(false positives\) and true impersonations slipping through the cracks \(false negatives\).
+There is valid consideration to be given to tweaking this parameter such that false negatives are weighted higher;  we would likely prefer the model to be overly sensitive and flag safe site erroneously than let a malicious site through.
+%perhaps include graphs from svm_exploration.ipynb
+
 % including DS/ML techniques used with justifications
 
 %\section{metrics, model performance, visualizations}
