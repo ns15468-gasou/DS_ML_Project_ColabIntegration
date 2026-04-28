@@ -73,7 +73,7 @@ The attackers may be numerous in their successes, but they leave behind their ow
 With that data, we can see how pervasive cyber threats are, train models to simulate said attackers, and allow the very computers they attack help mitigate the risks themselves.
 Our team looked at these untapped indicators, and developed our research questions: Is there more data to be mined from the individual datum that is a phishing domain? What more can be done with these foundational data points now that Natural Language Processing (NLP) has grown so rapidly in so few years?
 Is there a correlation between domain's lexical and semantic metadata?
-And critically, our guiding research question was this: \textbf{Do domain semantics help predict real-world malicious activity to a statistically significant degree?}
+And critically, our guiding research question was this: \textbf{Do domain semantics help predict real-world phishing and impersonation activity to a statistically significant degree?}
 Machine learning and data science stand on the forefront of successful action upon IoCs, and throughout this paper, we will show how important cyber-risk mitigation truly is in our modern interconnected world
 
 \section{Related Literature}
@@ -340,20 +340,20 @@ hushmail.com & hushmail.web.app & 0.912192 \\
 \node[subgraph, fit=(MATRIX)(TOP5R)(TOP5C), label={[font=\bfseries\footnotesize]above:Cosine Similarity}] {};
 
 % 5 - Exploratory Analysis
-\node[block, below=1.4cm of $(TOP5R)!0.5!(TOP5C)$] (EDA) {Distributions, Outliers\\\& Plotting};
+\node[block, below=1.4cm of $(TOP5R)!0.5!(TOP5C)$] (EDA) {Domain Distributions\\\& Frequency Plotting};
 \node[subgraph, fit=(EDA), label={[font=\bfseries\footnotesize]above:Exploratory Analysis}] {};
 
 % 6 - Future Analysis
-\node[block, below=1.4cm of EDA] (THRESH) {Cosine Similarity\\Thresholds};
-\node[block, below left=of THRESH] (CLASS) {Data Wrangling \&\\Classification};
-\node[block, below right=of THRESH] (ZERO) {Zero-Day\\Testing};
+\node[block, below=1.4cm of EDA] (THRESH) {Cosine Similarity\\Thresholds of Phishes vs. Legitimate};
+\node[block, below left=of THRESH] (CLASS) {Data Wrangling \&\\Classification of Cisco's unknown "Other"-type phishes};
+\node[block, below right=of THRESH] (ZERO) {Zero-Day\\Testing with Data not in Training Set};
 \node[subgraph, fit=(THRESH)(CLASS)(ZERO), label={[font=\bfseries\footnotesize]above:In-Depth Analysis~~}] {};
 
 % 7 - Future Outcomes
-\node[block, below=1.4cm of $(CLASS)!0!(ZERO)$] (BLOCK) {Proactive Blocklist\\Generation};
-\node[block, right=of BLOCK] (SCORE) {Real-Time\\Risk Scoring};
-\node[block, right=of SCORE] (ALERT) {Interpretable\\End-User Alerts};
-\node[subgraph, fit=(BLOCK)(SCORE)(ALERT), label={[fill=white,font=\bfseries\footnotesize]above:~~~Project Outcomes}] {};
+\node[block, below=1.8cm of $(CLASS)!0!(ZERO)$] (BLOCK) {Proactive Blocklist\\Generation and Prioritization};
+\node[block, right=of BLOCK] (SCORE) {Real-Time\\Risk Scoring for Phish Domains};
+\node[block, right=of SCORE] (ALERT) {Interpretable\\End-User Alerts about Domain Safety};
+\node[subgraph, fit=(BLOCK)(SCORE)(ALERT), label={[fill=white,font=\bfseries\footnotesize]above:~~~Research Deliverables}] {};
 
 % Connections
 \draw[arrow] (TR) -- (CLEAN);
@@ -376,7 +376,7 @@ hushmail.com & hushmail.web.app & 0.912192 \\
 \end{tikzpicture}%
 }% end resizebox
 \centering
-\caption{Framework Diagram}
+\caption{Domain Semantics Extraction Framework}
 \end{figure}
 
 \subsection{Data Acquisition and Description}
