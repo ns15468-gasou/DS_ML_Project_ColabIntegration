@@ -8,7 +8,7 @@
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{xcolor}
-\usepackage[colorlinks=true,urlcolor=blue,linkcolor=blue]{hyperref} % To allow Alt Text and Linking for Headers, and to allow blue, underlined URL hyperlinks
+\usepackage[colorlinks=false]{hyperref} % To allow Alt Text and Linking for Headers, and to allow blue, underlined URL hyperlinks
 \usepackage{float} % For easier figure alignment
 \usepackage{listings} % To have code blocks
 \usepackage{tikz} % To allow for diagramming
@@ -16,8 +16,7 @@
 \pgfplotsset{compat=1.18}
 \usetikzlibrary{positioning,arrows.meta,shapes.geometric,fit,backgrounds,calc}
 
-% Define styles usage of tikz later
-\tikzset{
+\tikzset{ % Define styles usage of tikz later
     block/.style={rectangle, draw=black!70, fill=blue!5, thick, rounded corners,
         align=center, font=\footnotesize, minimum height=0.8cm, text width=2.8cm},
     subgraph/.style={rectangle, draw=black!80, thick, rounded corners, inner sep=6pt},
@@ -112,11 +111,11 @@ The most recent papers in the review target prevention rather than detection, dr
 \subsubsection{Psychological Studies}
 No technical system operates in a vacuum, and as such, there is a robust category of research evaluating the factors affecting phishing attacks once they become a false negative. Dash and Ansari \cite{dash1} note that despite advancements in defensive systems, "naïve information security practices" account for between 72\% and 95\% of all cyber threats, motivating their study of AI-enabled training tools like viCyber, which can provide real-time feedback and adapt to each user's understanding level \cite{dash1}. Sarno, Harris, and Black \cite{dawn_m_sarno_which_2023} ground this in empirical data, finding that some phishing emails will inevitably reach the inbox, at which point the user becomes the last line of defense. Their regression study of 150 participants found that younger adults were most susceptible --- directly contradicting the popular assumption that older adults are the most vulnerable population --- and that self-reported phishing experience may foster overconfidence rather than genuine detection skill \cite{dawn_m_sarno_which_2023}. Together, these papers reinforce that interpretable outputs and end-user empowerment are not secondary concerns but core requirements for any detection system, including the detections proposed by our team's research.
 
-\subsection{Overall Literature Synthesis and Conclusion}
+\subsection{Overall Literature Synthesis}
 Two common themes reveal themselves across these papers. First, existing tools are commonly vulnerable to zero-day attacks, which suggest the need for robust ML and deep learning tools. From the reactive blocklists reviewed by Zieni et al.\cite{zieni_phishing_2023} to the phishing kit clustering of Brezeanu et al.\cite{brezeanu_phish_2025} to the retrieval-augmented classification of APOLLO\cite{desolda_apollo_2025}, every system reviewed encounters the same fundamental constraint: detection accuracy degrades sharply when the threat has not been seen before. Brezeanu's Phish Fighter requires a minimum of three pages from a new kit before it can form a cluster, and APOLLO's performance actually worsens when VirusTotal returns uncertain data on newly minted URLs. Even iMCircle, which was designed specifically for continuous discovery, can only surface indicators that have already been publicly discussed somewhere on the open web\cite{zhang1}. The zero-day problem is not merely a limitation noted in passing by these authors; it is the central unsolved challenge that connects the entire body of work reviewed here.
 Second, the ability to meet this need exists, but is still in its infancy, with effective ML tools having only existed for a matter of a few years. The progression visible across the papers is striking: Saidani et al.\cite{saidani1} advanced past bag-of-words with domain-specific semantic rules in 2020, Sonowal and Gunikhan\cite{sonowal1} showed that careful feature engineering could make ML viable even on resource-constrained mobile devices, and by 2025, APOLLO demonstrated that a general-purpose LLM could classify phishing emails at 97.4\% accuracy without any hand-crafted features at all\cite{desolda_apollo_2025}. 
 Our project aims to reconcile the findings and shortcomings of these papers by utilizing cutting-edge ML tools for the purpose of highly accurate and immediate phishing detection. Specifically, the research gaps identified here point toward needing a system that can operate effectively against novel threats without requiring a warm-up period of previously seen IoCs, that can leverage the semantic reasoning capabilities demonstrated by LLM-based approaches while maintaining the structural analysis strengths shown by methods like Phish Fighter, and that produces outputs interpretable enough to support the human end user who remains, as this review has shown, the last and most variable line of defense. We aim to contribute to these gaps by looking at the most fundamental datum of phishing datasets (domains) in order to expand upon the previously unanalyzed base semantic data that underpins modern cybersecurity blocking. This is through extracting these domains semantic information, and using it to prioritize phish defense in a novel way.
-\raggedbottom
+%\raggedbottom
 \section{Dataset and Preprocessing}
 % including wrangling, cleaning, and exploratory visualizations
 %% preliminary results, along with dataset details are required for revised review
@@ -430,9 +429,10 @@ Suggest how practitioners or researchers can use your findings.
 \bibliographystyle{plain} 
 \bibliography{project}
 
+\renewcommand{\contentsname}{Table of Contents}
+\tableofcontents
 \listoftables
 \listoffigures
-\tableofcontents
 
 \appendix
 \section{Appendix}
