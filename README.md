@@ -21,7 +21,8 @@ DS_ML_Project_ColabIntegration/
 │   │   ├── 1.0_data_preparation_pipeline.ipynb   ← data cleaning & normalization
 │   │   ├── 1.1_data_embedding_pipeline.ipynb      ← Gemini embeddings & cosine similarity
 │   │   ├── 2.0_ml_pipeline_svm.ipynb              ← SVM impersonation classifier
-│   │   └── 2.1_ml_pipeline_clustering.ipynb       ← K-Means attack pattern clustering
+│   │   ├── 2.1_ml_pipeline_clustering.ipynb       ← K-Means attack pattern clustering
+│   │   └── 3.0_url_triage_demo.ipynb              ← combined SVM + K-Means triage tool
 │   ├── pdfs/
 │   │   ├── Recasens, Smith - Semantic Prioritization of Domain Data...pdf
 │   │   └── Recasens, Smith - Lit Review Presentation.pdf
@@ -41,6 +42,7 @@ DS_ML_Project_ColabIntegration/
 - **[Notebook 1.1 — Embedding Pipeline](Project/notebooks/1.1_data_embedding_pipeline.ipynb)**
 - **[Notebook 2.0 — SVM Classification](Project/notebooks/2.0_ml_pipeline_svm.ipynb)**
 - **[Notebook 2.1 — K-Means Clustering](Project/notebooks/2.1_ml_pipeline_clustering.ipynb)**
+- **[Notebook 3.0 — URL Triage Demo](Project/notebooks/3.0_url_triage_demo.ipynb)**
 
 ---
 
