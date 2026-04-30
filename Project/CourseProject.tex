@@ -30,6 +30,7 @@
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}} % Boilerplate lines from IEEE template
 \begin{document}
+\pagestyle{plain}
 
 \title{Semantic Prioritization of Domain Data for Proactive Identification of Cybersecurity Indicators}
 
@@ -350,7 +351,7 @@ hushmail.com & hushmail.web.app & 0.912192 \\
 
 % 6 - Future Analysis
 \node[block, below=1.4cm of EDA] (THRESH) {Cosine Similarity\\Feature Engineering for Phishes vs. Legitimate};
-\node[block, below left=of THRESH] (CLASS) {Data Wrangling \&\\Classification of Cisco's unknown "Other"-type phishes};
+\node[block, below left=of THRESH] (CLASS) {K-Means Clustering\\of ``Other'' Phishes\\\& Attack Pattern Analysis};
 \node[block, below right=of THRESH] (ZERO) {Zero-Day\\Testing with Data not in Training Set};
 \node[subgraph, fit=(THRESH)(CLASS)(ZERO), label={[font=\bfseries\footnotesize]above:In-Depth Analysis~~}] {};
 
@@ -358,7 +359,8 @@ hushmail.com & hushmail.web.app & 0.912192 \\
 \node[block, below=1.8cm of $(CLASS)!0!(ZERO)$] (BLOCK) {Proactive Blocklist\\Generation and Prioritization};
 \node[block, right=of BLOCK] (SCORE) {Real-Time\\Risk Scoring for Phish Domains};
 \node[block, right=of SCORE] (ALERT) {Interpretable\\End-User Alerts about Domain Safety};
-\node[subgraph, fit=(BLOCK)(SCORE)(ALERT), label={[fill=white,font=\bfseries\footnotesize]above:~~~Research Deliverables}] {};
+\node[block, right=of ALERT] (TRIAGE) {URL Triage\\Demo Tool};
+\node[subgraph, fit=(BLOCK)(SCORE)(ALERT)(TRIAGE), label={[fill=white,font=\bfseries\footnotesize]above:~~~Research Deliverables}] {};
 
 % Connections
 \draw[arrow] (TR) -- (CLEAN);
@@ -378,6 +380,8 @@ hushmail.com & hushmail.web.app & 0.912192 \\
 \draw[arrow] (THRESH) -- (SCORE);
 \draw[arrow] (CLASS) -- (BLOCK);
 \draw[arrow] (ZERO) -- (ALERT);
+\draw[arrow] (CLASS) -- (TRIAGE);
+\draw[arrow] (THRESH) -- (TRIAGE);
 \end{tikzpicture}%
 }% end resizebox
 \centering
@@ -446,14 +450,26 @@ Our ROC Curve visual for the Tuned SVM shows an AUC of 0.809, which is more than
 \includegraphics[width=1\linewidth]{PNG3.png}
 \caption{Linear SVM Feature Coefficients}
 \end{figure}
+
+\subsection{Clustering Results}
+K-Means clustering analysis was performed on all data points labeled as ``Other'' in the PhishTank dataset; these account for approximately 90\% of all \textasciitilde56,000 data points. Four groups were chosen based on the highest number of clusters that still introduced minimal noise. As seen in the elbow curve, a case can be made for $k=3$, as two clusters show conceptual similarities; however, their feature profiles are distinct enough to warrant separation. The four groups identified are as follows:
+
+\begin{itemize}
+    \item \textbf{Cluster 0 (7,235 URLs) --- Platform Abuse (Simple):} Phishing pages hosted on cloud storage and form services such as Jotform and Cloudflare R2. Characterized by long hostnames and high digit ratios, commonly from auto-generated subdomain strings.
+    \item \textbf{Cluster 1 (21,341 URLs) --- Platform Abuse (Complex):} Attacks hosted on free website builders such as Google Sites, Weebly, and Wix. Characterized by moderate host lengths and low digit ratios, making them harder to differentiate from legitimate traffic due to their domain similarities to legitimate sites. While Clusters 0 and 1 share a logical definition, they are separately defined by greatly varying host lengths and digit ratios.
+    \item \textbf{Cluster 2 (8,680 URLs) --- Token/Long URL Abuse:} Instances of legitimate platforms such as Google Docs or Dropbox hosting malicious content, identifiable by high path depth and long authentication token strings.
+    \item \textbf{Cluster 3 (15,517 URLs) --- Shortener/Redirector:} URLs concealed behind redirect services, characterized by very short hostnames such as \texttt{qrco.de} or \texttt{t.co}.
+\end{itemize}
+
+Clusters 0, 1, and 2 together account for over 70\% of the ``Other'' data points. This directly validates the concern raised by Zieni et al.\ \cite{zieni_phishing_2023} regarding the use of legitimate hosting infrastructure to house phishing content, and confirms that standard lexical detection is unreliable against this dominant class of attack.
+
 \section{Discussion}
 % including interpretation, limitations, implications
 \subsection{Interpretation of Results}
 %Explain what the results mean in the context of your objectives.
 Figure 7 shows us a critical summary of our ML's results. This figure is us using another trained SVM to mine the coefficients from our RBF weights (as taught to us in DataCamp \cite{datacamp}). We have to do this extra SVM step because RBF weights are not human readable on their own. The visual gives a clear ranking of which URL features most influenced the final classification. We can see that \texttt{full\_length} and \texttt{digit\_ratio} are the primary drivers toward an "impersonation" label, while a high \texttt{digit\_count} strongly pulls the prediction toward "not impersonating" in this specific dataset. This lets us infer too high of a digit count could indicate a more generic phishing attack. The ability to correlate lexical features with semantic prioritization is a great success. This correlation is essential because it moves the model from a "black box" into an interpretable tool, showing exactly which features the algorithm prioritizes. This allows data science work like ours to audit the model's logic and ensure it is focusing on the most relevant structural anomalies found in phishing URLs.
 \subsection{Comparison with Prior Work}
-%Discuss how your findings relate to or differ from existing studies.
-TODO!
+Our SVM achieved an AUC of 0.809 operating purely on URL lexical features, which is competitive with the broader detection landscape surveyed by Zieni et al.\ \cite{zieni_phishing_2023}, who identified Random Forest as the most consistently performant traditional approach. Notably, our pipeline requires neither page content nor third-party intelligence feeds: unlike Phish Fighter \cite{brezeanu_phish_2025}, which requires HTML structure, or APOLLO \cite{desolda_apollo_2025}, which degrades without VirusTotal data, our approach functions on the URL string alone. The semantic similarity layer that generates our impersonation label is also novel relative to prior work; rather than relying on human-annotated labels, we mine a proxy target from embedding-space proximity, a method not employed by any of the surveyed systems. Our clustering results further add a categorization dimension that reactive systems do not provide, offering analysts a characterization of attack type rather than a binary verdict.
 %\subsection{Strength of Our Deliverables}
 %Highlight what your approach does well.
 % Nigel Here - Once again, the above subsection is one I think the actual conclusion can do better
@@ -474,7 +490,7 @@ Three main areas are highlighted in terms of significant results. First, the dat
 Next, our literature and data sources noted that labeled Phishing data is hard to come by [2]. But, by using semantic reasoning to mine data, we are able to provide more resources to identify impersonation and malicious phishing activity. Embeddings and cosine similarity also have the benefit of being affordable to do on scale via Vector Databases, meaning that applying Vector DB paradigms to raw domain data can be seen to have benefits.
 And after that, we were able to show that even a classic SVM classifier with hyperparameter tuning achieves meaningful discrimination between high-similarity ("impersonating") and low-similarity phishing URLs based solely on lexical URL structure. This shows that conventional ML processes can still provide meaningful benefits in the future.
 \subsection{Future Work}
-As this work moves into the future, a huge aspect can be incorporating additional feature construction: TLD categorization, whether the URL contains brand keywords, character n-gram frequencies, clustering results, or Levenshtein distance to known legitimate domains. We could also compare the SVM against other classifiers (Random Forest, Gradient Boosting, MLP) to benchmark and likely even improve performance. After that, ddditional datasets could be used to augment and mitigate the biases of PhishTank and Tranco, as more data could allow more dimensions to arise and outliers to be found. And after extracting the the linear SVM coefficients, we could use them to inform feature selection for the overall phishing detection pipeline, which could improve outcomes aswell. All in all, the research was a success, and showed that the often neglected base datum of a phishing domain is rich with semantic and ML potential for attack prevention.
+As this work moves into the future, a huge aspect can be incorporating additional feature construction: TLD categorization, whether the URL contains brand keywords, character n-gram frequencies, clustering results, or Levenshtein distance to known legitimate domains. We could also compare the SVM against other classifiers (Random Forest, Gradient Boosting, MLP) to benchmark and likely even improve performance. After that, additional datasets could be used to augment and mitigate the biases of PhishTank and Tranco, as more data could allow more dimensions to arise and outliers to be found. And after extracting the linear SVM coefficients, we could use them to inform feature selection for the overall phishing detection pipeline, which could improve outcomes as well. The pipeline was additionally packaged as a lightweight URL triage tool, demonstrating real-world applicability by combining both models into a single interface; a natural next step would be incorporating a binary phishing/legitimate classifier as a first-pass filter. All in all, the research was a success, and showed that the often neglected base datum of a phishing domain is rich with semantic and ML potential for attack prevention.
 
 \bibliographystyle{plain} 
 \bibliography{project}
