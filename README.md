@@ -42,11 +42,11 @@ DS_ML_Project_ColabIntegration/
 
 **Key deliverables:**
 - **[Final Paper](Project/pdfs/Recasens%2C%20Smith%20-%20Semantic%20Prioritization%20of%20Domain%20Data%20for%20Proactive%20Identification%20of%20Cybersecurity%20Indicators.pdf)**
-- **[Notebook 1A — Data Preparation](Project/notebooks/1.0_data_preparation_pipeline.ipynb)**
-- **[Notebook 1B — Embedding Pipeline](Project/notebooks/1.1_data_embedding_pipeline.ipynb)**
-- **[Notebook 2A — SVM Classification](Project/notebooks/2.0_ml_pipeline_svm.ipynb)**
-- **[Notebook 2B — K-Means Clustering](Project/notebooks/2.1_ml_pipeline_clustering.ipynb)**
-- **[Notebook 3 — URL Triage Demo](Project/notebooks/3.0_url_triage_demo.ipynb)**
+- **[Notebook 1A — Data Preparation](Project/notebooks/1A_data_preparation_pipeline.ipynb)**
+- **[Notebook 1B — Embedding Pipeline](Project/notebooks/1B_data_embedding_pipeline.ipynb)**
+- **[Notebook 2A — SVM Classification](Project/notebooks/2A_ml_pipeline_svm.ipynb)**
+- **[Notebook 2B — K-Means Clustering](Project/notebooks/2B_ml_pipeline_clustering.ipynb)**
+- **[Notebook 3 — URL Triage Demo](Project/notebooks/3_url_triage_demo.ipynb)**
 
 ---
 
