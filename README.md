@@ -37,6 +37,7 @@ DS_ML_Project_ColabIntegration/
 │   ├── CourseProject.tex ← LaTeX source code for our final paper
 │   ├── project.bib
 │   └── LitReviewOrganizer.csv ← Initial literature review organizer
+│      
 └── README.md ← You are here!
 ```
 
